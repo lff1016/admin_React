@@ -12,7 +12,7 @@ export default function App() {
         {/* 登录界面 */}
         <Route path='/login' element={<Login/>}></Route>
         {/* 主页 */}
-        <Route path='/' element={<Admin/>}></Route>
+        <Route path='/*' element={<Admin/>}></Route>
       </Routes>
     </div>
   )

@@ -1,6 +1,6 @@
 // 登录界面
 import React from 'react';
-import {Navigate,useNavigate} from 'react-router-dom'
+import {Navigate,useNavigate} from 'react-router-dom';
 
 import { Avatar, Form, Input, Button, Checkbox, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
