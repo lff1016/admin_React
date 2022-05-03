@@ -3,7 +3,6 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { Layout } from 'antd';
 
-
 import memoryUtils from '../../utils/memoryUtils';
 import './index.css'
 import LeftNav from '../../components/LeftNav';
@@ -12,7 +11,10 @@ import Main from '../../components/Main';
 export default function Admin() {
   const user = memoryUtils.user
 
-  if (!user.id) {
+  // 获取标签信息，并存入redux
+
+
+  if (!user._id) {
     return <Navigate to="/login" />
   } else {
     return (

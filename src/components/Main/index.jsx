@@ -12,24 +12,20 @@ import User from '../../pages/User/index';
 import Add from '../../pages/User/Add';
 import Profile from '../../pages/Profile';
 
-import './index.css'
+import Header from './Header';
+
+import './index.css';
+
 
 export default function Main() {
 
-  const { Header, Content, Footer } = Layout;
-
-  // const element = useRoutes(routers)
+  const { Content, Footer } = Layout;
 
   return (
     <Layout className="site-layout">
-      <Header className="site-layout-background header" style={{ padding: 0 }} />
-      <Content style={{ margin: '24px 16px 0' }} className='content'>
-        <Breadcrumb style={{ margin: '16px 0' }}>
-          <Breadcrumb.Item>User</Breadcrumb.Item>
-          <Breadcrumb.Item>Bill</Breadcrumb.Item>
-        </Breadcrumb>
-        <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-          <Routes>
+      <Header/>
+      <Content style={{ margin: '12px 16px 0',padding: '10px 10px', backgroundColor: '#f0f2f5' }} className='content'>
+      <Routes>
             <Route path='/home' element={<Home/>}></Route>
             <Route path='/article' element={<Article/>}></Route>
             <Route path='/article/edit' element={<Edit/>}></Route>
@@ -41,9 +37,8 @@ export default function Main() {
             <Route path='/' element={<Navigate to='/home'/>}></Route>
           </Routes>
           <Outlet/>
-        </div>
       </Content>
-      <Footer style={{ textAlign: 'center' }}>Ant Design ©2022 Created by LMD</Footer>
+      <Footer style={{ textAlign: 'center', backgroundColor: '#fff' }}>Ant Design ©2022 Created by LMD</Footer>
     </Layout>
   )
 }

@@ -1,0 +1,41 @@
+.tags {
+  width: 313px;
+  margin: 0 20px;
+  .tags-add {
+    display: flex;
+    margin-top: 5px;
+  }
+  .tags-list {
+    margin-top: 10px;
+    height: 250px;  
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    overflow-x: hidden;
+    overflow-y: auto;
+    // flex-wrap: wrap;
+    .tag-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-width: 60px;
+      height: 24px;
+      font-size: 14px;
+      color: #fff;
+      line-height: 24px;
+      text-align: center;
+      margin: 4px 4px;
+      padding: 0 8px;
+      .tagName {
+        font-style: normal;
+        margin-right: 8px;
+      }
+      
+    }
+    .tag-item:hover {
+      box-shadow: 0 0 8px rgba(0,0,0,.6);
+      transform: scale(1);
+    }
+  }
+}

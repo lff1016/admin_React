@@ -1,0 +1,87 @@
+.card {
+  position: relative;
+  overflow: hidden;
+  padding: 10px 20px;
+  background-color: #FFFFFF;
+  box-shadow: 0 3px 10px 0 rgba(7, 17, 27, 0.06);
+  transition: box-shadow 0.3s;
+}
+.card .card-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.card:hover {
+  box-shadow: 0 3px 10px 4px rgba(7, 17, 27, 0.15);
+}
+.basic-info {
+  height: 160px;
+}
+.basic-info .author-info {
+  justify-content: center;
+}
+.basic-info .author-info .welcom-word {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.basic-info .author-info .welcom-word .username {
+  display: inline;
+  color: var(--bg-color);
+}
+.basic-info .author-info .welcom-word .username .peom {
+  font-size: 20px;
+}
+.basic-info .time-weather {
+  justify-content: space-between;
+  font-size: 20px;
+}
+.basic-info .time-weather .clock-row {
+  display: flex;
+  justify-content: space-around;
+}
+.basic-info .time-weather .clock-curTime {
+  font-size: 28px;
+  font-weight: 700;
+}
+.basic-info .notice {
+  align-items: center;
+}
+.basic-info .notice .notice-title {
+  font-size: 22px;
+  font-weight: 700;
+}
+.article-data {
+  height: 140px;
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+}
+.article-data .data-item {
+  position: relative;
+  width: 100%;
+  margin-right: 20px;
+}
+.article-data .data-item .data-count {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 60px;
+  color: var(--bg-color);
+}
+.article-data .data-item:hover .data-count {
+  color: red;
+}
+.article-data .message {
+  margin-right: 0;
+}
+.function {
+  min-height: 350px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 18px;
+}

@@ -1,0 +1,105 @@
+// 公共 card 的样式
+.card {
+  position: relative;
+  overflow: hidden;
+  padding: 10px 20px;
+  // border-radius: 8px;
+  background-color: #FFFFFF;
+  box-shadow: 0 3px 10px 0 rgba(7,17,27,0.06);
+  transition: box-shadow 0.3s;
+  .card-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;      
+  }
+  &:hover {
+    box-shadow: 0 3px 10px 4px rgba(7,17,27,0.15);
+  }
+}
+
+.basic-info {
+  height: 160px;
+
+  // 第一行的用户信息 card
+  .author-info {
+    justify-content: center;
+    .welcom-word {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      .username {
+        display: inline;
+        color: var(--bg-color);
+      .peom {
+        font-size: 20px;
+      }
+      }
+    }
+  }
+
+  // 第一行的时间和天气 card
+  .time-weather {
+    justify-content: space-between;
+    font-size: 20px;
+    .clock-row {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .clock-curTime {
+      font-size: 28px;
+      font-weight: 700;
+    }
+  }
+
+  // 第一行的公告 card
+  .notice {
+    align-items: center;
+    .notice-title {
+      font-size: 22px;
+      font-weight: 700;
+    }
+  }
+}
+
+// 第二行的样式
+.article-data {
+  height: 140px;
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  .data-item {
+    position: relative;
+    width: 100%;
+    margin-right: 20px;
+    .data-count {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 60px;
+      color: var(--bg-color)
+    }
+    &:hover {
+      .data-count{
+          color: red;
+        }
+    }
+  }
+  .message {
+    margin-right: 0
+  }
+}
+
+
+// 第三行的样式
+.function {
+  min-height: 350px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 18px;
+  
+}

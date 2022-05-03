@@ -1,0 +1,34 @@
+.category {
+  width: 313px;
+  .category-add {
+    display: flex;
+    margin-top: 5px;
+  }
+  .category-list {
+    margin-top: 10px;
+    padding: 0 8px;
+    height: 280px;
+    overflow-y: auto;
+    .count {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      line-height: 20px;
+      background-color: var(--bg-color);
+      color: #fff;
+      border-radius: 10px;
+    }
+    .category-item-operation {
+      width: 40px;
+      display: flex;
+      justify-content: space-between;
+      .editIcon:hover {
+        color: var(--bg-color);
+      }
+      .deleteIcon:hover {
+        color: red;
+      }
+    }
+  }
+}

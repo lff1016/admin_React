@@ -1,4 +1,9 @@
 /*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */
+
+:root {
+  --bg-color: #1890ff
+}
+
 html,
 body,
 p,
@@ -76,6 +81,10 @@ th {
   padding: 0
 }
 
+a {
+  color: black;
+}
+
 html, body {
   height: 100%;
   width: 100%;
@@ -90,3 +99,4 @@ html, body {
   height: 100%;
   width: 100%;
 }
+

@@ -21,7 +21,8 @@ export default function Login() {
     const res = await reqLogin(username, password)
     if(res.status === 0) { // 登陆成功
       message.success('登录成功', 3)
-      const user = res.data[0]
+      console.log(res);
+      const user = res.data
       // 保存用户信息
       memoryUtils.user = user
       storageUtils.saveUser(user)
@@ -37,15 +38,14 @@ export default function Login() {
   }
 
   // 在登录界面如果用户已经登录过，就直接跳转首页
-  if (memoryUtils.user.id) {
+  if (memoryUtils.user._id) {
     return <Navigate to="/"/>
   } else {
     return (
       <div className='login'>
         <section className='login-main'>
           <Avatar size={64} src="https://joeschmoe.io/api/v1/random" className='img-avter' />
-          <div className='login-from'>
-            
+          <div className='login-from'>            
             <Form
               name="normal_login"
               className="login-form"
@@ -61,9 +61,8 @@ export default function Login() {
                 name="username"
                 rules={[
                   {required: true, message: '请输入你的用户名!'},
-                  {min: 4, message: '用户名必须大于4位！'},
-                  {max: 12, message: '用户名必须小于12位！'},
-                  {pattern: /^[a-zA-Z0-9_]+$/, message: '用户名必须是英文、数字或下划线！'}
+                  {min: 3, message: '用户名必须大于4位！'},
+                  {max: 12, message: '用户名必须小于12位！'}
                 ]}
               >
                 <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />

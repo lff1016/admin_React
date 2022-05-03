@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { Layout, Menu, Avatar } from 'antd';
 import { Link, useLocation } from 'react-router-dom'
 
@@ -42,7 +42,7 @@ export default function LeftNav() {
     <Sider>
       <div className="logo" />
       <div className='logo-title'>
-        <Avatar className='logo-avatar' size={64} src={user.avter} style={{ backgroundColor: '#fff' }} />
+        <Avatar className='logo-avatar' size={64} src={user.avatar} style={{ backgroundColor: '#fff' }} />
         <h3 className='leftNav-info'>后台管理系统</h3>
       </div>
       <Menu theme="dark" mode="inline" selectedKeys={[curPath]} defaultOpenKeys={[openKey]}>

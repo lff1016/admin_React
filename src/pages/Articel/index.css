@@ -1,0 +1,56 @@
+.article {
+  display: flex;
+  flex-direction: column;
+}
+.article .condition-filter {
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  margin-bottom: 20px;
+  padding: 0 10px;
+  font-size: 16px;
+  align-items: center;
+}
+.article .data-table {
+  height: 450px;
+  padding: 10px;
+  background-color: #fff;
+}
+.article .data-table .status-dot {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.article .data-table .status-dot i {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 5px;
+  border-radius: 6px;
+}
+.article .data-table .status-dot .status-dot-draft {
+  background-color: red;
+}
+.article .data-table .status-dot .status-dot-articel {
+  background-color: #52c41a;
+}
+.article .data-table .table-title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  margin-bottom: 10px;
+  padding: 0 10px;
+}
+.article .data-table .table-title .artice-list {
+  font-weight: 700;
+}
+.article .data-table .table-title .table-set {
+  width: 180px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.article .data-table .table-title .table-set > span:hover {
+  color: var(--bg-color);
+}
