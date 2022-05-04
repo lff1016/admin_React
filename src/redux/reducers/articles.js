@@ -1,6 +1,6 @@
 import { GET_ARTICLES } from "../constant";
 
-const initState = []
+const initState = {}
 
 export default function addRuducer(preState = initState, action) {
   const {type, data} = action

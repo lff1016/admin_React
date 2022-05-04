@@ -4,7 +4,8 @@ import {
   GET_CATEGORIES,
   GET_DRAFTS,
   GET_POEM,
-  GET_TAGS
+  GET_TAGS,
+  GET_SAYS
 } from '../constant';
 
 // 登录
@@ -21,6 +22,9 @@ export const getCategories = data => ({type: GET_CATEGORIES, data})
 
 // 获得所有标签
 export const getTags = data => ({type: GET_TAGS, data})
+
+// 获取所有说说
+export const getSays = data => ({type: GET_SAYS, data})
 
 // 获得每日诗句的信息
 export const getPoem   = data => ({type: GET_POEM, data})

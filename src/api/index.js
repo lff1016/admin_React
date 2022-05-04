@@ -64,3 +64,12 @@ export const reqAddOrUpdateArticle = (article) => ajax('/api/admin/article/' + (
 
 // 删除文章
 export const reqDeleteArticel = id => ajax('/api/admin/article/delete', {_id: id}, 'POST')
+
+// 获取所有说说
+export const reqSaysList = () => ajax('/api/admin/says/list')
+
+// 添加/更新说说
+export const reqAddAndUpdateSays = say => ajax('/api/admin/says/'+ (say._id ? 'update' : 'add'), say, 'POST')
+
+// 删除说说
+export const reqDeleteSay = id => ajax('/api/admin/says/delete', {_id: id}, 'POST')

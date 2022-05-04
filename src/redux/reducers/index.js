@@ -6,6 +6,7 @@ import drafts from './drafts';
 import categories from './category';
 import tags from './tags';
 import poems from './poem';
+import says from './says'
 
 
 export default combineReducers({
@@ -14,5 +15,6 @@ export default combineReducers({
   drafts,
   categories,
   tags,
-  poems
+  poems,
+  says
 })

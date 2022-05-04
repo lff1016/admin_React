@@ -28,7 +28,6 @@ import isContained from '../../utils/isContained';
 
 const Article = ({
   articles,
-  drafts,
   categories,
   tags,
   getArticles,
@@ -46,6 +45,7 @@ const Article = ({
       title: '标题',
       dataIndex: 'title',
       key: 'title',
+      width:'30%',
       render: title => (
         <Tooltip placement="topLeft" title={title}>
           {title}
@@ -56,8 +56,11 @@ const Article = ({
       title: '发布日期',
       dataIndex: 'publishDate',
       key: 'publishDate',
+      width: '15%',
       render:  text => <>{moment(text).format('YYYY-MM-DD HH:mm:ss')}</>,
-      sorter: (a, b) => a.publishDate - b.publishDate,
+      sorter: (a, b) =>  moment(a.publishDate) - moment(b.publishDate),
+      defaultSortOrder: 'descend',
+      sortDirections: ['ascend', 'descend', 'ascend'] /* 禁止排序恢复到默认状态 */
     },
     {
       title: '状态',
@@ -115,19 +118,18 @@ const Article = ({
     {
       title: '操作',
       key: 'action',
+      align: 'center',
+      width: 100,
       render: (text, record) => (
         <Space size="middle">
           <Button type="primary" onClick={() => editArticle(record._id, record.status)}>编辑</Button>
           <Popconfirm
             title="确定删除文章吗？"
-            onConfirm={() => {
-              deleteArticle(record._id)
-              console.log(record);
-            }}
+            onConfirm={() => {deleteArticle(record._id)}}
             okText="确定"
             cancelText="取消"
           >
-            <Button type="primary">删除</Button>
+            <Button type="primary" danger>删除</Button>
           </Popconfirm>,
         </Space>
       ),
@@ -149,7 +151,7 @@ const Article = ({
 
   useEffect(() => {
     // 将 redux中的文章数据展示出来
-    setArticelShow(articles)
+    setArticelShow(articles.articlesList)
   }, [articles])
   // ————————渲染表格内容 end ——————
 
@@ -338,6 +340,7 @@ const Article = ({
           </div>
         </div>
         <Table
+          rowKey={record => record._id}
           columns={columns}
           dataSource={articelShow}
           size={size}

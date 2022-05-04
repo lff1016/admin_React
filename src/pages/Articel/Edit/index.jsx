@@ -4,10 +4,18 @@ import { PlusOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import moment from 'moment';
+import MarkdownIt from 'markdown-it';
+import MdEditor from 'react-markdown-editor-lite';
+import hljs from 'highlight.js'
+// import style manually
+import 'react-markdown-editor-lite/lib/index.css';
+import 'highlight.js/styles/atom-one-light.css'
 
 // 引入富文本编辑器
-import RichEdit from '../../../components/RichEdit';
-import { getArticles, getCategories, getTags } from '../../../redux/actions';
+// import RichEdit from '../../../components/RichEdit';
+// 引入 markdown 编辑器
+import Markdown from '../../../components/Markdown';
+import { getArticles, getCategories } from '../../../redux/actions';
 import { reqDeleteImg, reqAddOrUpdateArticle } from '../../../api/index'
 
 const { Option } = Select;
@@ -31,8 +39,7 @@ const Edit = props => {
     const edit = params.get('id') === null ? false : true
     if (edit) { // 编辑模式
       // 判断是否为草稿
-      const flag = params.get('a_status') === 0+''
-      console.log(flag);
+      const flag = params.get('a_status') === 0 + ''
       if (flag) { // 草稿
         setIsDraft(true)
       }
@@ -44,7 +51,7 @@ const Edit = props => {
 
   // ————编辑时，从redux中获取文章 start ————
   const getDetailFromRedux = () => {
-    const detailObj = props.articles.filter(item => item._id === id)[0]
+    const detailObj = props.articles.articlesList.filter(item => item._id === id)[0]
 
     // 将标签遍历出来放到数组中
     const TagsArr = detailObj.tags.map(item => item._id)
@@ -165,18 +172,24 @@ const Edit = props => {
   const [form] = Form.useForm();
   // ——保存并实时更新 草稿/文章 状态 start ——
   const [artilceStatus, setArtilceStatus] = useState(0) /* 保存文章发表还是草稿的状态 */
+  const [content, setContent] = useState('')
   const statusRef = useRef()
   useEffect(() => {
     statusRef.current = artilceStatus
   })
+
+  const getHtmlContent = (val) => {
+    setContent(val)
+  }
   // ——保存并实时更新 草稿/文章 状态 end ——
   const handleSubmit = async (status) => {
     try {
       // 验证表单
       const values = await form.validateFields();
       // 收集数据，并封装成 article 对象
+
+      console.log(content);
       const { title, publishDate, category, tags } = values
-      const content = editor.current.getDetail()
       const coverImg = img.current.fileList.map(file => file.name)
       setArtilceStatus(status) /* 保存状态 */
       let article
@@ -187,20 +200,17 @@ const Edit = props => {
         article = { title, publishDate, category, tags, coverImg, status, content }
       }
 
-      console.log('文章', article)
-
       // 调用接口添加/更新文章
       const result = await reqAddOrUpdateArticle(article)
 
       if (result.status === 0) {
-        console.log('isDraft',isDraft, 'isEdit', isEdit);
         if (statusRef.current === 1) {
           message.success(`${isEdit && !isDraft ? '更新' : '发布'}文章成功！😀`)
           // 跳转到文章列表页
           navigate('/article')
         } else {
           message.success('文章已存为草稿！😎')
-          navigate('/article/draft')
+          navigate('/article')
         }
 
       } else {
@@ -210,14 +220,8 @@ const Edit = props => {
       console.log('提交表单错误！', errorInfo);
     }
   }
-
-  // useEffect(() => {
-    
-  // }, [artilceStatus])
-
-
-  console.log('isDraft',isDraft);
   // ————处理提交文章 end ————
+
 
   return (
     <div className='edit'>
@@ -310,13 +314,27 @@ const Edit = props => {
         </Form.Item>
         {/* 文章内容 */}
         <Form.Item name="content" label="内容">
-          <RichEdit ref={editor} key={detailObj.content} detail={detailObj.content} />
+          {/* <RichEdit ref={editor} key={detailObj.content} detail={detailObj.content} /> */}
+          <Markdown 
+           ref={editor} 
+           key={detailObj.content} 
+           detail={detailObj.content}
+           getContent={getHtmlContent}
+           />
+          {/* <MdEditor
+            value={mdValue}
+            onChange={handleEditorChange}
+            renderHTML={text => mdParser.render(text)}
+            style={{ height: 400 }}
+          >
+          </MdEditor> */}
         </Form.Item>
         {/* 提交文章 */}
         <Form.Item
+          className='submit-btn'
           wrapperCol={{
-            span: 12,
-            offset: 6,
+            span: 4,
+            offset: 4,
           }}
         >
           {/* <Button type="primary" onClick={handleSubmit}>发布文章</Button> */}
@@ -328,24 +346,17 @@ const Edit = props => {
           >
             <Button type="primary">{isEdit && !isDraft ? '更新' : '发布'}文章</Button>
           </Popconfirm>
-        </Form.Item>
-        {/* 提交草稿 */}
-        <Form.Item
-          wrapperCol={{
-            span: 12,
-            offset: 6,
-          }}
-        >
-          {/* <Button type="primary" onClick={handleSubmit}>发布文章</Button> */}
           <Popconfirm
             title='确定存为草稿吗？'
             okText="确定"
             cancelText="取消"
             onConfirm={() => handleSubmit(0)}
           >
-            <Button type="primary">存为草稿</Button>
+            <Button type="primary" style={{ marginLeft: '8px' }}>存为草稿</Button>
           </Popconfirm>
         </Form.Item>
+        {/* 提交草稿 */}
+
       </Form>
     </div>
   )

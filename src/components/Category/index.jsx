@@ -4,8 +4,8 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 
 import './index.css';
-import { getArticles, getCategories } from '../../redux/actions';
-import { reqCategoryList, reqAddCategory, reqDeleteCategory, reqUpdateCategory, reqArticles } from '../../api/index'
+import { getCategories } from '../../redux/actions';
+import { reqCategoryList, reqAddCategory, reqDeleteCategory, reqUpdateCategory } from '../../api/index'
 
 
 const Category = props => {
@@ -16,28 +16,16 @@ const Category = props => {
     props.getCategories(res.data)
   }
 
-  // 向数据库中获取所有的文章，并放入redux中
-  const getAllArticles = async () => {
-    const res = await reqArticles()
-    props.getArticles(res.data)
-  }
   useEffect(() => {
     getAllCategory()
   }, [])
-
-  useEffect(() => {
-    getAllArticles()
-  }, [])
-
-
-
 
   // ————添加分类操作————
   const [categoryInput, setCategoryInput] = useState('')
   const addCategory = async () => {
     reqAddCategory(categoryInput)
       .then(res => {
-        if(res.status === 0) {
+        if (res.status === 0) {
           setCategoryInput('')
           message.success('添加分类成功！😀')
           getAllCategory()
@@ -53,7 +41,7 @@ const Category = props => {
     console.log('删除分类', id, category);
     reqDeleteCategory(id, category)
       .then(res => {
-        if(res.status === 0) {
+        if (res.status === 0) {
           message.success('删除分类成功！😀')
           getAllCategory()
         }
@@ -80,7 +68,7 @@ const Category = props => {
   const editCategory = () => {
     reqUpdateCategory(categoryId, categoryEditInput)
       .then(res => {
-        if(res.status === 0) {
+        if (res.status === 0) {
           setCategoryEditInput('')
           setCategoryId('')
           setCategoryEditVisable(false)
@@ -161,10 +149,8 @@ const Category = props => {
 export default connect(
   state => ({
     categories: state.categories,
-    articles: state.articles
   }),
   {
-    getArticles,
     getCategories
   }
 )(Category)

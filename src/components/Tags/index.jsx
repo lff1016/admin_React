@@ -3,7 +3,7 @@ import { Modal, Input, Popconfirm, Button, message } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 
 import './index.css';
-import { getArticles, getTags } from '../../redux/actions';
+import { getTags } from '../../redux/actions';
 import { connect } from 'react-redux';
 import { reqTagsList, reqAddTag, reqDeleteTag, reqUpdateTag } from '../../api/index'
 
@@ -17,10 +17,10 @@ const Tags = props => {
     const res = await reqTagsList()
     props.getTags(res.data)
   }
+ 
   useEffect(() => {
     getAllTags()
   }, [])
-
   // ————添加标签 start ————
   const [tagInput, setTagInput] = useState('')
   const addTag = async () => {
@@ -144,7 +144,6 @@ export default connect(
     tags: state.tags
   }),
   {
-    getArticles,
     getTags
   }
 )(Tags)

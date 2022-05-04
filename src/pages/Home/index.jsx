@@ -1,23 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Row, Col, Input, Button, Table, Popconfirm, } from 'antd';
-
+import React, { useState, useEffect, useRef } from 'react';
+import { Row, Col } from 'antd';
+import { connect } from 'react-redux';
 
 import './index.css';
 import memoryUtils from '../../utils/memoryUtils';
 import format from '../../utils/format';
-import { reqWeather } from '../../api/index';
+import { reqWeather, reqArticles } from '../../api/index';
+import { getArticles } from '../../redux/actions';
 
 import Category from '../../components/Category';
 import Tags from '../../components/Tags';
 
-export default function Home() {
+const Home = (props) => {
+
   // 获取用户信息
   const user = memoryUtils.user
-  
 
   // —————每日一句 start————
   const [peom, setPeom] = useState({})
-  
+
   function loadSentence() {
     const jinrishici = require('jinrishici');
     jinrishici.load(result => {
@@ -63,6 +64,32 @@ export default function Home() {
   }, [])
   // ————时钟card end————
 
+
+  // 向数据库中获取所有的文章，并放入redux中
+  const getAllArticles = async () => {
+    const res = await reqArticles()
+    props.getArticles(res.data)
+  }
+
+  useEffect(() => {
+    getAllArticles()
+  }, [])
+
+  const [draftsNum, setdraftsNum] = useState(0)
+  const [articlesNum, setArticlesNum] = useState(0)
+
+  useEffect(() => {
+    console.log('props', props);
+    if(props.articles.count) {
+      const a_num = props.articles.count.find(item => item._id == 1).total
+      const d_num = props.articles.count.find(item => item._id == 0).total
+      setArticlesNum(a_num)
+      setdraftsNum(d_num) 
+      console.log('articlesNum', articlesNum);
+    }
+    
+  }, [props])
+
   return (
     <div className='home'>
       {/* 第一行的内容 */}
@@ -106,11 +133,11 @@ export default function Home() {
       <div className='article-data'>
         <div className='card data-item'>
           <div className='data-count-title'>文章数</div>
-          <div className='data-count'>100</div>
+          <div className='data-count'>{articlesNum}</div>
         </div>
         <div className='card data-item'>
           <div className='data-count-title'>草稿数</div>
-          <div className='data-count'>23</div>
+          <div className='data-count'>{draftsNum}</div>
         </div>
         <div className='card data-item'>
           <div className='data-count-title'>说说数</div>
@@ -124,14 +151,23 @@ export default function Home() {
       </div>
 
 
-    {/* 第三行的内容 */}
-    <div className='function'>
-      <Category/>
-      <Tags/>
-      <div className='card'>
-        3
+      {/* 第三行的内容 */}
+      <div className='function'>
+        <Category />
+        <Tags />
+        <div className='card'>
+          3
+        </div>
       </div>
-    </div>
     </div>
   )
 }
+
+export default connect(
+  state => ({
+    articles: state.articles,
+  }),
+  {
+    getArticles,
+  }
+)(Home)

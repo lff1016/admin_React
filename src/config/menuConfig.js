@@ -36,9 +36,9 @@ const menuList = [
         icon: <EditOutlined/>
       },
       {
-        key: '/article/draft',
-        title: '草稿箱',
-        path: '/article/draft',
+        key: '/article/says',
+        title: '说说',
+        path: '/article/says',
         icon: <InboxOutlined/>
       }
     ]

@@ -11,9 +11,6 @@ import Main from '../../components/Main';
 export default function Admin() {
   const user = memoryUtils.user
 
-  // 获取标签信息，并存入redux
-
-
   if (!user._id) {
     return <Navigate to="/login" />
   } else {
