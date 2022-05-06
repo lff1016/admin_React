@@ -313,7 +313,7 @@ const Edit = props => {
               <>
                 {menu}
                 <Divider style={{ margin: '8px 0' }} />
-                <Space align="center" style={{ padding: '0 8px 4px' }} className='addCategory'>
+                <Space align="center" style={{ padding: '0 8px 4px' }} className='add'>
                   <Input
                     style={{ width: '300px' }}
                     placeholder="请输入新的分类~"
@@ -350,7 +350,7 @@ const Edit = props => {
               <>
                 {menu}
                 <Divider style={{ margin: '8px 0' }} />
-                <Space align="center" style={{ padding: '0 8px 4px' }} className='addCategory'>
+                <Space align="center" style={{ padding: '0 8px 4px' }} className='add'>
                   <Input
                     style={{ width: '300px' }}
                     placeholder="请输入新的分类~"

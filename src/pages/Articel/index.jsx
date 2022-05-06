@@ -25,6 +25,7 @@ import './index.css';
 import { reqArticles, reqDeleteArticel } from '../../api/index';
 import { getArticles, getCategories } from '../../redux/actions';
 import isContained from '../../utils/isContained';
+import TableNav from '../../components/TableNav';
 
 const Article = ({
   articles,
@@ -249,18 +250,9 @@ const Article = ({
   // ————————表格头部功能区 start ——————
   // --修改尺寸数据 start--
   const [size, setSize] = useState('default')
-
-  const handleSize = ({ key }) => {
-    setSize(key)
+  const getSize = (size) => {
+    setSize(size)
   }
-  // 表格尺寸的每一项
-  const menu = (
-    <Menu onClick={handleSize} selectedKeys={[size]}>
-      <Menu.Item key="default"><span>默认</span></Menu.Item>
-      <Menu.Item key="middle"><span>中等</span></Menu.Item>
-      <Menu.Item key="small"><span>紧凑</span></Menu.Item>
-    </Menu>
-  );
   // ————————表格头部功能区 end ————————
 
   return (
@@ -315,30 +307,7 @@ const Article = ({
       {/* --筛选栏结束-- */}
       {/* --表格内容开始-- */}
       <div className='data-table'>
-        <div className='table-title'>
-          <div className='artice-list'>文章列表</div>
-          {/* 表格设置，新建/刷新/适应 */}
-          <div className='table-set'>
-            <Button 
-              key="button" 
-              icon={<PlusOutlined />} 
-              type="primary" 
-              size='large'
-              onClick={turnAddArticle}
-              >
-                新建
-              </Button>
-            <Tooltip placement="top" title='刷新'>
-              <span className='reload'><ReloadOutlined /></span>
-            </Tooltip>
-            <Dropdown overlay={menu} trigger={['click']} placement='bottomLeft' overlayStyle={{ 'width': '70px' }}>
-              <Tooltip placement="top" title='密度'>
-                <span className='tabel-size'><ColumnHeightOutlined /></span>
-              </Tooltip>
-            </Dropdown>
-
-          </div>
-        </div>
+        <TableNav  title='文章' addBtn={turnAddArticle} getSize={getSize}/>
         <Table
           rowKey={record => record._id}
           columns={columns}

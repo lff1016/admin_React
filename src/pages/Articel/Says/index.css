@@ -7,22 +7,3 @@
   background-color: #fff;
   padding: 10px;
 }
-.says .says-table .table-title {
-  display: flex;
-  justify-content: space-between;
-  font-size: 20px;
-  margin-bottom: 10px;
-  padding: 0 10px;
-}
-.says .says-table .table-title .says-list {
-  font-weight: 700;
-}
-.says .says-table .table-title .table-set {
-  width: 180px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.says .says-table .table-title .table-set > span:hover {
-  color: var(--bg-color);
-}

@@ -14,16 +14,13 @@ import {
   Input,
   Select
 } from 'antd';
-import {
-  PlusOutlined,
-  ColumnHeightOutlined,
-  ReloadOutlined
-} from '@ant-design/icons';
+
 
 import './index.css';
 import { getSays } from '../../../redux/actions';
 import { reqSaysList, reqAddAndUpdateSays, reqDeleteSay } from '../../../api/index'
 
+import TableNav from '../../../components/TableNav';
 
 
 const Says = ({ says, getSays }) => {
@@ -131,12 +128,12 @@ const Says = ({ says, getSays }) => {
   const submitSay = async () => {
     const content = saysContent
     const pubilshDate = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss')
-    let say 
-    if(isEdit) { // 如果是编辑模式，传入id
+    let say
+    if (isEdit) { // 如果是编辑模式，传入id
       const _id = sayId
       say = { _id, content, pubilshDate }
     } else {
-      say = {content, pubilshDate }
+      say = { content, pubilshDate }
     }
     const res = await reqAddAndUpdateSays(say)
     if (res.status === 0) {
@@ -153,7 +150,7 @@ const Says = ({ says, getSays }) => {
   const deleteSay = async id => {
     console.log('删除', id);
     const res = await reqDeleteSay(id)
-    if(res.status === 0) {
+    if (res.status === 0) {
       message.success('删除说说成功！😀')
       getAllSays()
     } else {
@@ -165,70 +162,29 @@ const Says = ({ says, getSays }) => {
     setIsModalVisible(false)
   }
 
-  // --修改尺寸数据 start --
+  // 修改表头的尺寸
   const [size, setSize] = useState('default')
-
-  const handleSize = ({ key }) => {
-    setSize(key)
+  const getSize = (size) => {
+    setSize(size)
   }
-  // 表格尺寸的每一项
-  const menu = (
-    <Menu onClick={handleSize} selectedKeys={[size]}>
-      <Menu.Item key="default"><span>默认</span></Menu.Item>
-      <Menu.Item key="middle"><span>中等</span></Menu.Item>
-      <Menu.Item key="small"><span>紧凑</span></Menu.Item>
-    </Menu>
-  )
-  // --修改尺寸数据 end --
-  // ————————表格头部功能区 end ————————
-
-  // ————对说说的操作 start ————
-
-
-
-  // ————对说说的操作 end ————
 
   return (
     <div className='says'>
       <div className='says-table'>
         {/* 表头功能区 */}
-        <div className='table-title'>
-          <div className='says-list'>说说列表</div>
-          {/* 表格设置，新建/刷新/适应 */}
-          <div className='table-set'>
-            <Button
-              key="button"
-              icon={<PlusOutlined />}
-              type="primary"
-              size='large'
-              onClick={addSay}
-            >
-              新建
-            </Button>
-            {/* 说说编辑卡片 */}
-            <Modal title={`${isEdit ? '更新' : '新建'}说说`} visible={isModalVisible} onOk={submitSay} onCancel={handleCancel}>
-              <TextArea
-                rows={4}
-                placeholder="请输入内容~"
-                allowClear
-                showCount
-                value={saysContent}
-                onChange={e => setSaysContent(e.target.value)}
-              />
-            </Modal>
-            {/* 刷新 */}
-            <Tooltip placement="top" title='刷新'>
-              <span className='reload'><ReloadOutlined /></span>
-            </Tooltip>
-            {/* 改变表格样式 */}
-            <Dropdown overlay={menu} trigger={['click']} placement='bottomLeft' overlayStyle={{ 'width': '70px' }}>
-              <Tooltip placement="top" title='密度'>
-                <span className='tabel-size'><ColumnHeightOutlined /></span>
-              </Tooltip>
-            </Dropdown>
-          </div>
-        </div>
+         <TableNav title='说说' addBtn={addSay} getSize={getSize}/>
         {/* 表格主体内容 */}
+        {/* 说说编辑卡片 */}
+        <Modal title={`${isEdit ? '更新' : '新建'}说说`} visible={isModalVisible} onOk={submitSay} onCancel={handleCancel}>
+          <TextArea
+            rows={4}
+            placeholder="请输入内容~"
+            allowClear
+            showCount
+            value={saysContent}
+            onChange={e => setSaysContent(e.target.value)}
+          />
+        </Modal>
         <Table
           rowKey={record => record._id}
           columns={columns}
