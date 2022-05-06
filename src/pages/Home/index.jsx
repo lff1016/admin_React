@@ -79,13 +79,11 @@ const Home = (props) => {
   const [articlesNum, setArticlesNum] = useState(0)
 
   useEffect(() => {
-    console.log('props', props);
     if(props.articles.count) {
       const a_num = props.articles.count.find(item => item._id == 1).total
       const d_num = props.articles.count.find(item => item._id == 0).total
       setArticlesNum(a_num)
       setdraftsNum(d_num) 
-      console.log('articlesNum', articlesNum);
     }
     
   }, [props])

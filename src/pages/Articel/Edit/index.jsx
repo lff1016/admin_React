@@ -1,28 +1,41 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Form, Input, Button, Select, Upload, Popconfirm, DatePicker, message, Modal } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Select,
+  Upload,
+  Popconfirm,
+  DatePicker,
+  message,
+  Modal,
+  Divider,
+  Typography,
+  Space
+} from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import moment from 'moment';
-import MarkdownIt from 'markdown-it';
-import MdEditor from 'react-markdown-editor-lite';
-import hljs from 'highlight.js'
-// import style manually
-import 'react-markdown-editor-lite/lib/index.css';
-import 'highlight.js/styles/atom-one-light.css'
 
+import './index.css'
 // 引入富文本编辑器
 // import RichEdit from '../../../components/RichEdit';
 // 引入 markdown 编辑器
 import Markdown from '../../../components/Markdown';
-import { getArticles, getCategories } from '../../../redux/actions';
-import { reqDeleteImg, reqAddOrUpdateArticle } from '../../../api/index'
+import { getArticles, getCategories, getTags } from '../../../redux/actions';
+import { 
+  reqDeleteImg, 
+  reqAddOrUpdateArticle, 
+  reqAddCategory, 
+  reqCategoryList,
+  reqAddTag, 
+  reqTagsList } from '../../../api/index'
 
 const { Option } = Select;
 
 const Edit = props => {
 
-  const editor = useRef()
   const img = useRef()
   const formRef = useRef()
   const navigate = useNavigate()
@@ -84,11 +97,6 @@ const Edit = props => {
     // 如果不是编辑页面，直接返回
     if (!isEdit) return
     getDetailFromRedux()
-    // if (isDraft) { // 如果是草稿，向redux中获取草稿详情
-    //   getDetailFromRedux(false)
-    // } else { // 否则向redux中获取文章详情
-    //   getDetailFromRedux(true)
-    // }
   }, [isEdit])
   // ————编辑时，从redux中获取文章 end ————
 
@@ -173,11 +181,51 @@ const Edit = props => {
   // ——保存并实时更新 草稿/文章 状态 start ——
   const [artilceStatus, setArtilceStatus] = useState(0) /* 保存文章发表还是草稿的状态 */
   const [content, setContent] = useState('')
+  // 获取文章的状态
   const statusRef = useRef()
   useEffect(() => {
     statusRef.current = artilceStatus
   })
+  // 分类模块
+  const [categoryName, setCategoryName] = useState('')
 
+  // 向数据库中获取所有分类，并放入redux中
+  const getAllCategory = async () => {
+    const res = await reqCategoryList()
+    props.getCategories(res.data)
+  }
+
+  const addCategory = async e => {
+    e.preventDefault();
+    // 向数据库中添加分类
+    const res = await reqAddCategory(categoryName)
+    if (res.status === 0) {
+      setCategoryName('')
+      // 重新向 redux 中获取数据
+      getAllCategory()
+    }
+  }
+
+  // 添加标签
+  const [tagName, setTagName] = useState('')
+  // ————获取 Tags 数据，并放入 redux 中————
+  const getAllTags = async () => {
+    const res = await reqTagsList()
+    props.getTags(res.data)
+  }
+
+  const addTag = async e => {
+    e.preventDefault()
+    // 向数据库中添加标签
+    const res = await reqAddTag(tagName)
+    if (res.status === 0) {
+      setTagName('')
+      getAllTags()
+    }
+  }
+
+
+  // 编辑时，获取md子组件传来的值
   const getHtmlContent = (val) => {
     setContent(val)
   }
@@ -187,8 +235,6 @@ const Edit = props => {
       // 验证表单
       const values = await form.validateFields();
       // 收集数据，并封装成 article 对象
-
-      console.log(content);
       const { title, publishDate, category, tags } = values
       const coverImg = img.current.fileList.map(file => file.name)
       setArtilceStatus(status) /* 保存状态 */
@@ -263,12 +309,30 @@ const Edit = props => {
             allowClear
             showArrow
             showSearch
+            dropdownRender={menu => (
+              <>
+                {menu}
+                <Divider style={{ margin: '8px 0' }} />
+                <Space align="center" style={{ padding: '0 8px 4px' }} className='addCategory'>
+                  <Input
+                    style={{ width: '300px' }}
+                    placeholder="请输入新的分类~"
+                    value={categoryName}
+                    onChange={e => setCategoryName(e.target.value)}
+                  />
+                  <Typography.Link onClick={addCategory} style={{ whiteSpace: 'nowrap' }}>
+                    <PlusOutlined /> 添加分类
+                  </Typography.Link>
+                </Space>
+              </>
+            )}
           >
             {
               props.categories.map(item => {
                 return <Option key={item._id}>{item.name}</Option>
               })
             }
+
           </Select>
         </Form.Item>
         {/* 文章标签 */}
@@ -282,6 +346,23 @@ const Edit = props => {
             placeholder='请选择文章标签~'
             allowClear
             showArrow
+            dropdownRender={menu => (
+              <>
+                {menu}
+                <Divider style={{ margin: '8px 0' }} />
+                <Space align="center" style={{ padding: '0 8px 4px' }} className='addCategory'>
+                  <Input
+                    style={{ width: '300px' }}
+                    placeholder="请输入新的分类~"
+                    value={tagName}
+                    onChange={e => setTagName(e.target.value)}
+                  />
+                  <Typography.Link onClick={addTag} style={{ whiteSpace: 'nowrap' }}>
+                    <PlusOutlined /> 添加分类
+                  </Typography.Link>
+                </Space>
+              </>
+            )}
           >
             {props.tags.map(item => {
               return <Option key={item._id}>{item.name}</Option>
@@ -315,12 +396,11 @@ const Edit = props => {
         {/* 文章内容 */}
         <Form.Item name="content" label="内容">
           {/* <RichEdit ref={editor} key={detailObj.content} detail={detailObj.content} /> */}
-          <Markdown 
-           ref={editor} 
-           key={detailObj.content} 
-           detail={detailObj.content}
-           getContent={getHtmlContent}
-           />
+          <Markdown
+            key={detailObj.content}
+            detail={detailObj.content}
+            getContent={getHtmlContent}
+          />
           {/* <MdEditor
             value={mdValue}
             onChange={handleEditorChange}
@@ -368,5 +448,5 @@ export default connect(
     categories: state.categories,
     articles: state.articles
   }),
-  { getArticles, getCategories }
+  { getArticles, getCategories, getTags }
 )(Edit)

@@ -47,11 +47,9 @@ import 'highlight.js/styles/atom-one-light.css'
 export default function Markdown(props) {
   // 数据保存
   const [value, setValue] = useState("")
-  const [htmlMd, setHtmlMd] = useState('')
   // 组件挂载时填充markdown
   useEffect(() => {
     setValue(props.detail)
-    console.log(props);
   }, [])
 
   // markdown-it 利用设置参数，具体查询markdown-it官网
@@ -66,7 +64,7 @@ export default function Markdown(props) {
   // 检测markdown数据变化
   function handleEditorChange({ html, text }) {
     setValue(text)
-    props.getContent(html)
+    props.getContent(text)
   }
 
 
