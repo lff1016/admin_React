@@ -13,6 +13,9 @@ export const reqUsersList = () => ajax('/api/admin/users/list')
 // 修改用户权限
 export const reqUserAuth = (id, auth) => ajax('/api/admin/users/auth',{_id: id, auth}, 'POST')
 
+// 删除用户头像
+export const reqDeleteAvatar = name => ajax('/api/admin/users/deleteAvatar',  {name}, 'POST')
+
 // 获取文章列表
 export const reqArticles = () => ajax('/api/admin/article/list')
 

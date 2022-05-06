@@ -136,7 +136,7 @@ const Edit = props => {
       const result = file.response  // {status: 0, data: {name: 'xxx,jpg', url: '图片地址'}} 
       if (result.status === 0) {
         message.success('上传图片成功！😀')
-        const { name, url } = result.data
+        const { path, name, url } = result.data
         file = fileList[fileList.length - 1]
         file.name = name
         file.url = url
