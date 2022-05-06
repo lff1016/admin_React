@@ -45,10 +45,10 @@ const Edit = props => {
   const [isDraft, setIsDraft] = useState(false) /* 是否为草稿 */
   const [id, setId] = useState('')
   const [detailObj, setDetailObj] = useState({})
+  const [content, setContent] = useState('')
 
   useEffect(() => {
     // 组件挂载时，判断是编辑还是添加
-    console.log(params.get('a_status'));
     const edit = params.get('id') === null ? false : true
     if (edit) { // 编辑模式
       // 判断是否为草稿
@@ -79,8 +79,9 @@ const Edit = props => {
     })
 
     console.log(detailObj);
-    const coverImg = detailObj.coverImg
 
+    // 填充图片信息
+    const coverImg = detailObj.coverImg
     if (coverImg && coverImg.length > 0) {
       const newFileList = coverImg.map((img, index) => ({
         uid: -index,
@@ -91,6 +92,10 @@ const Edit = props => {
       setFileList(newFileList)
     }
   }
+    // 编辑时，获取md子组件传来的值
+    const getHtmlContent = (val) => {
+      setContent(val)
+    }
 
   // 编辑时，组件挂载就填入文章信息
   useEffect(() => {
@@ -180,7 +185,6 @@ const Edit = props => {
   const [form] = Form.useForm();
   // ——保存并实时更新 草稿/文章 状态 start ——
   const [artilceStatus, setArtilceStatus] = useState(0) /* 保存文章发表还是草稿的状态 */
-  const [content, setContent] = useState('')
   // 获取文章的状态
   const statusRef = useRef()
   useEffect(() => {
@@ -224,11 +228,6 @@ const Edit = props => {
     }
   }
 
-
-  // 编辑时，获取md子组件传来的值
-  const getHtmlContent = (val) => {
-    setContent(val)
-  }
   // ——保存并实时更新 草稿/文章 状态 end ——
   const handleSubmit = async (status) => {
     try {

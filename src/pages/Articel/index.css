@@ -36,22 +36,3 @@
 .article .data-table .status-dot .status-dot-articel {
   background-color: #52c41a;
 }
-.article .data-table .table-title {
-  display: flex;
-  justify-content: space-between;
-  font-size: 20px;
-  margin-bottom: 10px;
-  padding: 0 10px;
-}
-.article .data-table .table-title .artice-list {
-  font-weight: 700;
-}
-.article .data-table .table-title .table-set {
-  width: 180px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.article .data-table .table-title .table-set > span:hover {
-  color: var(--bg-color);
-}

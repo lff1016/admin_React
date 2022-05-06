@@ -7,6 +7,12 @@ import axios from 'axios';
 // 登录
 export const reqLogin = (username, password) => ajax('/api/login', { username, password }, 'POST')
 
+// 获取用户列表
+export const reqUsersList = () => ajax('/api/admin/users/list')
+
+// 修改用户权限
+export const reqUserAuth = (id, auth) => ajax('/api/admin/users/auth',{_id: id, auth}, 'POST')
+
 // 获取文章列表
 export const reqArticles = () => ajax('/api/admin/article/list')
 

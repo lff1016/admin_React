@@ -175,7 +175,7 @@ const Says = ({ says, getSays }) => {
          <TableNav title='说说' addBtn={addSay} getSize={getSize}/>
         {/* 表格主体内容 */}
         {/* 说说编辑卡片 */}
-        <Modal title={`${isEdit ? '更新' : '新建'}说说`} visible={isModalVisible} onOk={submitSay} onCancel={handleCancel}>
+        <Modal title='修改用户' visible={isModalVisible} onOk={submitSay} onCancel={handleCancel}>
           <TextArea
             rows={4}
             placeholder="请输入内容~"
