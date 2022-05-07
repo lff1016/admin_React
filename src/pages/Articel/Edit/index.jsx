@@ -24,13 +24,14 @@ import './index.css'
 // 引入 markdown 编辑器
 import Markdown from '../../../components/Markdown';
 import { getArticles, getCategories, getTags } from '../../../redux/actions';
-import { 
-  reqDeleteImg, 
-  reqAddOrUpdateArticle, 
-  reqAddCategory, 
+import {
+  reqDeleteImg,
+  reqAddOrUpdateArticle,
+  reqAddCategory,
   reqCategoryList,
-  reqAddTag, 
-  reqTagsList } from '../../../api/index'
+  reqAddTag,
+  reqTagsList
+} from '../../../api/index'
 
 const { Option } = Select;
 
@@ -78,8 +79,6 @@ const Edit = props => {
       tags: TagsArr
     })
 
-    console.log(detailObj);
-
     // 填充图片信息
     const coverImg = detailObj.coverImg
     if (coverImg && coverImg.length > 0) {
@@ -92,10 +91,10 @@ const Edit = props => {
       setFileList(newFileList)
     }
   }
-    // 编辑时，获取md子组件传来的值
-    const getHtmlContent = (val) => {
-      setContent(val)
-    }
+  // 编辑时，获取md子组件传来的值
+  const getHtmlContent = (val) => {
+    setContent(val)
+  }
 
   // 编辑时，组件挂载就填入文章信息
   useEffect(() => {
@@ -280,9 +279,6 @@ const Edit = props => {
         }}
         layout="horizontal"
         ref={formRef}
-        initialValues={{
-          title: detailObj.title
-        }}
       >
         {/* 文章标题 */}
         <Form.Item

@@ -7,3 +7,6 @@
   background-color: #fff;
   padding: 10px;
 }
+.users .user-avatar {
+  border: 1.5px solid #999;
+}

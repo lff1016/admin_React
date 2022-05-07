@@ -5,7 +5,10 @@ import { message } from 'antd';
 import axios from 'axios';
 
 // 登录
-export const reqLogin = (username, password) => ajax('/api/login', { username, password }, 'POST')
+export const reqLogin = (email, password) => ajax('/api/login', { email, password }, 'POST')
+
+// 查询某个用户
+export const reqGetUser = id => ajax(`/api/admin/user?id=${id}`)
 
 // 获取用户列表
 export const reqUsersList = () => ajax('/api/admin/users/list')
@@ -15,6 +18,18 @@ export const reqUserAuth = (id, auth) => ajax('/api/admin/users/auth',{_id: id, 
 
 // 删除用户头像
 export const reqDeleteAvatar = name => ajax('/api/admin/users/deleteAvatar',  {name}, 'POST')
+
+// 修改用户信息
+export const reqUserUpdate = userInfo => ajax('/api/admin/users/update', userInfo, 'POST')
+
+// 修改用户名
+export const reqUserEdit = (id, username, role) => ajax('/api/admin/users/edit', {_id: id, username, role}, 'POST')
+
+// 修改用户角色
+// export const reqUserRoleUpdate = (id, role) => ajax('/api/admin/users/role', {_id: id, role}, 'POST')
+
+// 删除用户
+export const reqDeleteUser = id => ajax('/api/admin/users/delete', {_id: id}, 'POST')
 
 // 获取文章列表
 export const reqArticles = () => ajax('/api/admin/article/list')

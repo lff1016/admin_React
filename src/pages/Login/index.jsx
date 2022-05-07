@@ -17,8 +17,8 @@ export default function Login() {
 
   // 提交表单且数据验证成功后回调事件
   const onFinish = async (values) => {
-    const {username, password} = values
-    const res = await reqLogin(username, password)
+    const {email, password} = values
+    const res = await reqLogin(email, password)
     if(res.status === 0) { // 登陆成功
       message.success('登录成功', 3)
       console.log(res);
@@ -44,7 +44,7 @@ export default function Login() {
     return (
       <div className='login'>
         <section className='login-main'>
-          <Avatar size={64} src="https://joeschmoe.io/api/v1/random" className='img-avter' />
+          <Avatar size={64} src='http://localhost:3001/upload/avatar/avatar-default-man.png' className='img-avter' />
           <div className='login-from'>            
             <Form
               name="normal_login"
@@ -58,14 +58,13 @@ export default function Login() {
               <h3 className='login-title'>用户登录</h3>
               {/* 用户名的表单框 */}
               <Form.Item
-                name="username"
+                name="email"
                 rules={[
-                  {required: true, message: '请输入你的用户名!'},
-                  {min: 3, message: '用户名必须大于4位！'},
-                  {max: 12, message: '用户名必须小于12位！'}
+                  {required: true, message: '请输入你的邮箱!'},
+                  {pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/, message: '请输入正确的邮箱地址！'}
                 ]}
               >
-                <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
               </Form.Item>
               {/* 密码的表单框 */}
               <Form.Item

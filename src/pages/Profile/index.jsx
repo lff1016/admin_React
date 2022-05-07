@@ -1,22 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useId } from 'react';
 import {
   Form,
   Input,
   Button,
-  Select,
   Upload,
   Popconfirm,
-  DatePicker,
   message,
   Modal,
-  Divider,
-  Typography,
-  Space
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import memoryUtils from '../../utils/memoryUtils';
-import { reqDeleteAvatar } from '../../api/index'
+import storageUtils from '../../utils/storageUtils';
+import { reqDeleteAvatar, reqUserUpdate, reqGetUser } from '../../api/index'
 
 export default function Profile() {
 
@@ -25,11 +21,38 @@ export default function Profile() {
 
   const img = useRef()
   const formRef = useRef()
+  const [fileList, setFileList] = useState([])
 
   const [form] = Form.useForm();
+  // ————编辑用户信息————
+  const getUserInfo = () => {
+    formRef.current.setFieldsValue({
+      username: user.username,
+      email: user.email,
+      bio: user.bio
+    })
+
+    // 填充头像
+    const user_avatar = user.avatar
+    if (user_avatar && user_avatar.length > 0) {
+      const newFileList = user_avatar.map((img, index) => (
+        {
+          useId: -index,
+          name: img,
+          status: 'done',
+          url: 'http://localhost:3001/upload/avatar/' + img
+        }
+      ))
+      setFileList(newFileList)
+    }
+  }
+
+  useEffect(() => {
+    getUserInfo()
+  }, [])
 
   // ————处理上传/删除图片 start ————
-  const [fileList, setFileList] = useState([])
+
 
   function getBase64(file) {
     return new Promise((resolve, reject) => {
@@ -53,7 +76,6 @@ export default function Profile() {
     - fileList：当前的文件列表
     - event: 上传中的服务端响应内容，包含了上传进度等信息，高级浏览器支持
    */
-  const [imgUrl, setImgUrl] = useState('')
   const postImg = async ({ file, fileList }) => {
     // 一旦上传成功，将当前上传的 file 的信息改为{name, url}
     if (file.status === 'done') {
@@ -64,7 +86,7 @@ export default function Profile() {
         file = fileList[fileList.length - 1]
         file.name = name
         file.url = url
-        setImgUrl(url)
+        console.log('请求的', url);
       } else {
         message.error('上传图片失败！😔')
       }
@@ -105,8 +127,35 @@ export default function Profile() {
     setPreviewVisible(false)
   }
 
-  const handleConfirm = () => {
-    console.log('修改');
+  // ————提交用户修改信息————
+  const handleSubmit = async () => {
+    // 验证表单
+    try {
+      const values = await form.validateFields()
+      // 收集数据，封装 user 对象
+      const { username, bio } = values
+      const avatar = img.current.fileList.map(file => file.name)
+      const _id = user._id
+      const newUser = { _id, username, bio, avatar }
+
+      // 调用接口，更新信息
+      const res = await reqUserUpdate(newUser)
+      if (res.status === 0) {
+        // 重新获取用户信息
+        const result = await reqGetUser(_id)
+        if(result.status === 0) {
+          // 重新在内存中保存用户信息
+          memoryUtils.user = result.data
+          storageUtils.saveUser(result.data)
+        }
+        message.success('更新用户信息成功！😀')
+      } else {
+        message.error('更新用户信息失败！😔')
+      }
+    } catch (err) {
+      console.log('提交表单错误', err);
+
+    }
   }
 
   return (
@@ -121,14 +170,11 @@ export default function Profile() {
         }}
         layout="horizontal"
         ref={formRef}
-      // initialValues={{
-      //   title: detailObj.title
-      // }}
       >
         {/* 用户头像 */}
         <Form.Item label="头像">
           <Upload
-            action="/api/admin/users/avatar" /* 图片提交的地址 */
+            action="/api/admin/users/avatar" /* 图片提交的api地址 */
             accept='image/*' /* 只接收图片格式 */
             name='avatar' /* 请求参数名 */
             listType="picture-card" /* 卡片样式 */
@@ -153,23 +199,22 @@ export default function Profile() {
         <Form.Item
           name="username"
           label="用户名"
-          rules={[{ required: true, message: '请输入用户名！' }]}
+          rules={[
+            { required: true, message: '请输入你的用户名!' },
+            { min: 3, message: '用户名必须大于4位！' },
+            { max: 12, message: '用户名必须小于12位！' }
+          ]}
         >
           <Input />
         </Form.Item>
         {/* 用户邮箱*/}
         <Form.Item name="email" label="邮箱" rules={[{ required: true, message: '请输入邮箱!' }]}>
-          <Input type='email' />
+          <Input type='email' disabled />
         </Form.Item>
-        {/* 用户密码 */}
-        <Form.Item
-          name="password"
-          label="密码"
-          rules={[{ required: true, message: '请输入密码！' }]}
-        >
-          <Input.Password />
+        {/* 用户Bio*/}
+        <Form.Item name="bio" label="签名" >
+          <Input type='text' placeholder='请输入签名~' />
         </Form.Item>
-
         {/* 更新用户信息 */}
         <Form.Item
           className='submit-btn'
@@ -180,10 +225,10 @@ export default function Profile() {
         >
           {/* <Button type="primary" onClick={handleSubmit}>发布文章</Button> */}
           <Popconfirm
-            title='修改'
+            title='确认提交用户修改信息吗？'
             okText="确定"
             cancelText="取消"
-            onConfirm={handleConfirm}
+            onConfirm={handleSubmit}
           >
             <Button type="primary">修改信息</Button>
           </Popconfirm>
