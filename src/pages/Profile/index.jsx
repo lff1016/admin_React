@@ -141,13 +141,10 @@ export default function Profile() {
       // 调用接口，更新信息
       const res = await reqUserUpdate(newUser)
       if (res.status === 0) {
-        // 重新获取用户信息
-        const result = await reqGetUser(_id)
-        if(result.status === 0) {
-          // 重新在内存中保存用户信息
-          memoryUtils.user = result.data
-          storageUtils.saveUser(result.data)
-        }
+        console.log(res.data);
+        // 重新在内存中保存用户信息
+        memoryUtils.user = res.data
+        storageUtils.saveUser(res.data)
         message.success('更新用户信息成功！😀')
       } else {
         message.error('更新用户信息失败！😔')
@@ -184,7 +181,8 @@ export default function Profile() {
             maxCount={1}
             ref={img}
           >
-            {fileList.length >= 1 ? null : uploadButton}
+            {/* {fileList.length >= 1 ? null : uploadButton} */}
+          {fileList.url ? <img src={fileList.url}/> : uploadButton}
           </Upload>
           <Modal
             visible={previewVisible}
@@ -201,7 +199,7 @@ export default function Profile() {
           label="用户名"
           rules={[
             { required: true, message: '请输入你的用户名!' },
-            { min: 3, message: '用户名必须大于4位！' },
+            { min: 2, message: '用户名必须大于1位！' },
             { max: 12, message: '用户名必须小于12位！' }
           ]}
         >

@@ -18,12 +18,15 @@ import {
 
 import './index.css';
 import { getSays } from '../../../redux/actions';
-import { reqSaysList, reqAddAndUpdateSays, reqDeleteSay } from '../../../api/index'
+import { reqSaysList, reqAddAndUpdateSays, reqDeleteSay } from '../../../api/index';
+import memoryUtils from '../../../utils/memoryUtils';
 
 import TableNav from '../../../components/TableNav';
 
 
 const Says = ({ says, getSays }) => {
+
+  const user = memoryUtils.user
 
   // ————渲染表格数据 start ————
   // --表头数据--
@@ -126,29 +129,35 @@ const Says = ({ says, getSays }) => {
   }
   // 提交说说
   const submitSay = async () => {
-    const content = saysContent
-    const pubilshDate = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss')
-    let say
-    if (isEdit) { // 如果是编辑模式，传入id
-      const _id = sayId
-      say = { _id, content, pubilshDate }
+    if (user.role !== 'admin') {
+      message.warning('只有管理员才可以发表说说哦~😁')
     } else {
-      say = { content, pubilshDate }
-    }
-    const res = await reqAddAndUpdateSays(say)
-    if (res.status === 0) {
-      setIsModalVisible(false)
-      getAllSays()
-      message.success(`${isEdit ? '更新' : '添加'}说说成功！😀`)
-    } else {
-      setIsModalVisible(false)
-      message.error('添加说说失败！😔')
+      const content = saysContent
+      const pubilshDate = moment(Date.now()).format('YYYY-MM-DD HH:mm:ss')
+      let say
+      if (isEdit) { // 如果是编辑模式，传入id
+        const _id = sayId
+        say = { _id, content, pubilshDate }
+      } else {
+        say = { content, pubilshDate }
+      }
+      const res = await reqAddAndUpdateSays(say)
+      if (res.status === 0) {
+        setIsModalVisible(false)
+        getAllSays()
+        message.success(`${isEdit ? '更新' : '添加'}说说成功！😀`)
+      } else {
+        setIsModalVisible(false)
+        message.error('添加说说失败！😔')
+      }
     }
   }
 
   // 删除说说
   const deleteSay = async id => {
-    console.log('删除', id);
+   if(user.role !== 'admin') {
+    message.warning('只有管理员才可以删除说说哦~😁')
+   } else {
     const res = await reqDeleteSay(id)
     if (res.status === 0) {
       message.success('删除说说成功！😀')
@@ -156,6 +165,7 @@ const Says = ({ says, getSays }) => {
     } else {
       message.error('删除说说失败！😔')
     }
+   }
   }
 
   const handleCancel = () => {
@@ -172,7 +182,7 @@ const Says = ({ says, getSays }) => {
     <div className='says'>
       <div className='says-table'>
         {/* 表头功能区 */}
-         <TableNav title='说说' addBtn={addSay} getSize={getSize}/>
+        <TableNav title='说说' addBtn={addSay} getSize={getSize} />
         {/* 表格主体内容 */}
         {/* 说说编辑卡片 */}
         <Modal title='修改用户' visible={isModalVisible} onOk={submitSay} onCancel={handleCancel}>

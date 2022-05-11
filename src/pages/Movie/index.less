@@ -1,0 +1,127 @@
+.movies {
+  display: flex;
+  flex-direction: column;
+
+  .movie-filter {
+    margin: 0 5px;
+  }
+
+  .movies-nav {
+    height: 100px;
+    display: flex;
+    justify-content: space-around;
+    background-color: #fff;
+    margin-bottom: 20px;
+    padding: 0 10px;
+    font-size: 16px;
+    align-items: center;
+  }
+
+  .movies-list {
+    
+    padding: 10px 20px;
+    background-color: #fff;
+
+    .list-title {
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .list-content {
+      display: flex;
+      // justify-content: space-between;
+      flex-wrap: wrap;
+
+      .card-item:not(:nth-child(3n)) {
+        margin-right: 35px;
+      }
+
+      .card-item {
+        position: relative;
+        display: flex;
+        overflow: hidden;
+        padding: 5px;
+        width: 400px;
+        height: 265px;
+        border: 1px solid rgba(0, 0, 0, .06);
+        border-radius: 4px;
+        background-color: #FFFFFF;
+        box-shadow: 0;
+        transition: box-shadow 0.3s;
+        margin-bottom: 10px;
+          &:hover {
+          box-shadow: 0 1px 2px -2px #00000029, 0 3px 6px #0000001f, 0 5px 12px 4px #00000017;
+        }
+       
+        .info {
+          margin: 5px 0;
+        }
+  
+        // 电影封面
+        .movie-cover {
+          width: 183px;
+          margin-right: 10px;
+  
+          .movie-img {
+            width: 100%;
+            height: auto;
+          }
+        }
+  
+        .movie-info {
+          flex: 1;
+          // 电影名
+          .movie-name {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            font-weight: 700;
+            margin: 3px 0;
+  
+            .movie-score {
+              color: #ff6000;
+            }
+          }
+  
+          // 电影年份
+          .movie-year {
+            display: flex;
+            flex-direction: column;
+            .movie-publishDate {
+              margin-bottom: 5px;
+            }
+          }
+          
+          // 电影简介
+          .movie-comment {
+            width: 100%;
+          }
+  
+          // 电影播放和收藏
+          .movie-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .play-btn {
+              margin-right: 20px;
+            }
+            .movie-like {
+              margin-right: 20px;
+            }
+            .movie-like:hover {
+              cursor: pointer;
+            }
+            .setting:hover {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+
+   
+  }
+}

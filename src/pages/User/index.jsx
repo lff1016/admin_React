@@ -63,7 +63,7 @@ export default function User() {
       key: 'authority',
       align: 'center',
       render: (text, record) => {
-        return <Switch defaultChecked={record.authority} onChange={() => changeAuthority(record._id, record.authority)} />
+        return <Switch defaultChecked={record.authority} disabled={user.role !== 'admin'} onChange={() => changeAuthority(record._id, record.authority)} />
       }
     },
     {
@@ -169,30 +169,36 @@ export default function User() {
   // ————用户删除————
   const navigate = useNavigate()
   const deleteUser = async id => {
-    console.log('删除用户', id);
-    const res = await reqDeleteUser(id)
-    if (res.status === 0) {
-      if (res.data._id === user._id) {
-        // 如果删除的是正在登录的用户，就从localStorage中删除，并跳转到登录界面
-        user = ''
-        storageUtils.deleteUser()
-        navigate('/login')
-      }
-      message.success('删除用户成功！😀')
+    if (user !== 'admin') {
+      message.warning('只有管理员才能删除用户！😁')
     } else {
-      message.error('删除用户失败！😔')
+      const res = await reqDeleteUser(id)
+      if (res.status === 0) {
+        if (res.data._id === user._id) {
+          // 如果删除的是正在登录的用户，就从localStorage中删除，并跳转到登录界面
+          user = ''
+          storageUtils.deleteUser()
+          navigate('/login')
+        }
+        message.success('删除用户成功！😀')
+      } else {
+        message.error('删除用户失败！😔')
+      }
     }
   }
 
   // ————用户权限控制————
-
   const changeAuthority = async (id, authority) => {
-    const res = await reqUserAuth(id, authority)
-    if (res.status === 0) {
-      message.success(`${authority ? '禁用' : '启用'}用户成功！😀`)
-      getAllUsers()
+    if (user.role !== 'admin') {
+      message.warning('只有管理员才有权限禁用用户！😁')
     } else {
-      message.error(`${authority ? '禁用' : '启用'}用户失败！😔`)
+      const res = await reqUserAuth(id, authority)
+      if (res.status === 0) {
+        message.success(`${authority ? '禁用' : '启用'}用户成功！😀`)
+        getAllUsers()
+      } else {
+        message.error(`${authority ? '禁用' : '启用'}用户失败！😔`)
+      }
     }
   }
   // 修改表头的尺寸

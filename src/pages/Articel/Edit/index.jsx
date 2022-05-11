@@ -31,11 +31,13 @@ import {
   reqCategoryList,
   reqAddTag,
   reqTagsList
-} from '../../../api/index'
+} from '../../../api/index';
+import memoryUtils from '../../../utils/memoryUtils';
 
 const { Option } = Select;
 
 const Edit = props => {
+  const user = memoryUtils.user
 
   const img = useRef()
   const formRef = useRef()
@@ -130,7 +132,10 @@ const Edit = props => {
     - event: 上传中的服务端响应内容，包含了上传进度等信息，高级浏览器支持
    */
   const postImg = async ({ file, fileList }) => {
-    // 一旦上传成功，将当前上传的 file 的信息改为{name, url}
+    if(user.role !== 'admin') {
+      message.warning('只有管理员才可以上传图片哦~😁')
+    } else {
+      // 一旦上传成功，将当前上传的 file 的信息改为{name, url}
     if (file.status === 'done') {
       const result = file.response  // {status: 0, data: {name: 'xxx,jpg', url: '图片地址'}} 
       if (result.status === 0) {
@@ -151,6 +156,7 @@ const Edit = props => {
       }
     }
     setFileList(fileList)
+    }
   }
   const uploadButton = (
     <div>
@@ -199,13 +205,17 @@ const Edit = props => {
   }
 
   const addCategory = async e => {
-    e.preventDefault();
-    // 向数据库中添加分类
-    const res = await reqAddCategory(categoryName)
-    if (res.status === 0) {
-      setCategoryName('')
-      // 重新向 redux 中获取数据
-      getAllCategory()
+    if(user.role !== 'admin') {
+      message.warning('只有管理员才可以添加分类！😁')
+    } else {
+      e.preventDefault();
+      // 向数据库中添加分类
+      const res = await reqAddCategory(categoryName)
+      if (res.status === 0) {
+        setCategoryName('')
+        // 重新向 redux 中获取数据
+        getAllCategory()
+      }
     }
   }
 
@@ -218,17 +228,24 @@ const Edit = props => {
   }
 
   const addTag = async e => {
-    e.preventDefault()
-    // 向数据库中添加标签
-    const res = await reqAddTag(tagName)
-    if (res.status === 0) {
-      setTagName('')
-      getAllTags()
+    if (user.role !== 'admin') {
+      message.warning('只有管理员才可以添加标签！😁')
+    } else {
+      e.preventDefault()
+      // 向数据库中添加标签
+      const res = await reqAddTag(tagName)
+      if (res.status === 0) {
+        setTagName('')
+        getAllTags()
+      }
     }
   }
 
   // ——保存并实时更新 草稿/文章 状态 end ——
   const handleSubmit = async (status) => {
+   if(user.role !== 'admin') {
+    message.warning('只有管理员才可以添加/修改文章！😁')
+   } else {
     try {
       // 验证表单
       const values = await form.validateFields();
@@ -263,6 +280,7 @@ const Edit = props => {
     } catch (errorInfo) {
       console.log('提交表单错误！', errorInfo);
     }
+   }
   }
   // ————处理提交文章 end ————
 

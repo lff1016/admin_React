@@ -5,10 +5,12 @@ import { connect } from 'react-redux';
 
 import './index.css';
 import { getCategories } from '../../redux/actions';
-import { reqCategoryList, reqAddCategory, reqDeleteCategory, reqUpdateCategory } from '../../api/index'
+import { reqCategoryList, reqAddCategory, reqDeleteCategory, reqUpdateCategory } from '../../api/index';
+import memoryUtils from '../../utils/memoryUtils';
 
 
 const Category = props => {
+  const user = memoryUtils.user
 
   // 向数据库中获取所有分类，并放入redux中
   const getAllCategory = async () => {
@@ -23,7 +25,10 @@ const Category = props => {
   // ————添加分类操作————
   const [categoryInput, setCategoryInput] = useState('')
   const addCategory = async () => {
-    reqAddCategory(categoryInput)
+    if(user.role !== 'admin') {
+      message.warning('只有管理员才能添加分类！😁')
+    } else {
+      reqAddCategory(categoryInput)
       .then(res => {
         if (res.status === 0) {
           setCategoryInput('')
@@ -31,6 +36,7 @@ const Category = props => {
           getAllCategory()
         }
       })
+    }
   }
   // ————删除文章的分类操作————
   // const deleteCategoryForm = async (id, category) => {
@@ -38,14 +44,17 @@ const Category = props => {
   // }
 
   const deleteCategory = async (id, category) => {
-    console.log('删除分类', id, category);
+   if (user.role !== 'admin') {
+    message.warning('只有管理员才能删除分类！😁')
+   } else {
     reqDeleteCategory(id, category)
-      .then(res => {
-        if (res.status === 0) {
-          message.success('删除分类成功！😀')
-          getAllCategory()
-        }
-      })
+    .then(res => {
+      if (res.status === 0) {
+        message.success('删除分类成功！😀')
+        getAllCategory()
+      }
+    })
+   }
   }
 
   // ———— 修改 Modal框————
@@ -66,7 +75,10 @@ const Category = props => {
   const [categoryEditInput, setCategoryEditInput] = useState('')
   // 确认修改的回调
   const editCategory = () => {
-    reqUpdateCategory(categoryId, categoryEditInput)
+    if (user.role !== 'admin') {
+      message.warning('只有管理员才能编辑分类！😁')
+    } else {
+      reqUpdateCategory(categoryId, categoryEditInput)
       .then(res => {
         if (res.status === 0) {
           setCategoryEditInput('')
@@ -77,6 +89,7 @@ const Category = props => {
           getAllCategory()
         }
       })
+    }
   }
 
   // 取消修改的回调

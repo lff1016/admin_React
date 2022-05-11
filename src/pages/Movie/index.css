@@ -1,0 +1,103 @@
+.movies {
+  display: flex;
+  flex-direction: column;
+}
+.movies .movie-filter {
+  margin: 0 5px;
+}
+.movies .movies-nav {
+  height: 100px;
+  display: flex;
+  justify-content: space-around;
+  background-color: #fff;
+  margin-bottom: 20px;
+  padding: 0 10px;
+  font-size: 16px;
+  align-items: center;
+}
+.movies .movies-list {
+  padding: 10px 20px;
+  background-color: #fff;
+}
+.movies .movies-list .list-title {
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.movies .movies-list .list-content {
+  display: flex;
+  flex-wrap: wrap;
+}
+.movies .movies-list .list-content .card-item:not(:nth-child(3n)) {
+  margin-right: 35px;
+}
+.movies .movies-list .list-content .card-item {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  padding: 5px;
+  width: 400px;
+  height: 265px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+  background-color: #FFFFFF;
+  box-shadow: 0;
+  transition: box-shadow 0.3s;
+  margin-bottom: 10px;
+}
+.movies .movies-list .list-content .card-item:hover {
+  box-shadow: 0 1px 2px -2px #00000029, 0 3px 6px #0000001f, 0 5px 12px 4px #00000017;
+}
+.movies .movies-list .list-content .card-item .info {
+  margin: 5px 0;
+}
+.movies .movies-list .list-content .card-item .movie-cover {
+  width: 183px;
+  margin-right: 10px;
+}
+.movies .movies-list .list-content .card-item .movie-cover .movie-img {
+  width: 100%;
+  height: auto;
+}
+.movies .movies-list .list-content .card-item .movie-info {
+  flex: 1;
+}
+.movies .movies-list .list-content .card-item .movie-info .movie-name {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 3px 0;
+}
+.movies .movies-list .list-content .card-item .movie-info .movie-name .movie-score {
+  color: #ff6000;
+}
+.movies .movies-list .list-content .card-item .movie-info .movie-year {
+  display: flex;
+  flex-direction: column;
+}
+.movies .movies-list .list-content .card-item .movie-info .movie-year .movie-publishDate {
+  margin-bottom: 5px;
+}
+.movies .movies-list .list-content .card-item .movie-info .movie-comment {
+  width: 100%;
+}
+.movies .movies-list .list-content .card-item .movie-info .movie-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.movies .movies-list .list-content .card-item .movie-info .movie-action .play-btn {
+  margin-right: 20px;
+}
+.movies .movies-list .list-content .card-item .movie-info .movie-action .movie-like {
+  margin-right: 20px;
+}
+.movies .movies-list .list-content .card-item .movie-info .movie-action .movie-like:hover {
+  cursor: pointer;
+}
+.movies .movies-list .list-content .card-item .movie-info .movie-action .setting:hover {
+  cursor: pointer;
+}

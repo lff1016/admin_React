@@ -5,7 +5,8 @@ import {
   GET_DRAFTS,
   GET_POEM,
   GET_TAGS,
-  GET_SAYS
+  GET_SAYS,
+  GET_MOVIES
 } from '../constant';
 
 // 登录
@@ -28,3 +29,6 @@ export const getSays = data => ({type: GET_SAYS, data})
 
 // 获得每日诗句的信息
 export const getPoem   = data => ({type: GET_POEM, data})
+
+// 获得电影的信息
+export const getMovies = data => ({type: GET_MOVIES, data})

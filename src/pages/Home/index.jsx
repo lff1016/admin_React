@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import './index.css';
 import memoryUtils from '../../utils/memoryUtils';
 import format from '../../utils/format';
-import { reqWeather, reqArticles } from '../../api/index';
-import { getArticles } from '../../redux/actions';
+import { reqWeather, reqArticles, reqSaysList } from '../../api/index';
+import { getArticles, getSays } from '../../redux/actions';
 
 import Category from '../../components/Category';
 import Tags from '../../components/Tags';
@@ -75,6 +75,20 @@ const Home = (props) => {
     getAllArticles()
   }, [])
 
+  // 向数据库中获取所有的说说,放入redux中
+  const getAllSays = async () => {
+    const res = await reqSaysList()
+    console.log(res);
+    if (res.status === 0) {
+      props.getSays(res.data)
+    }
+  }
+
+  // 组件挂载时将数据放入用于展示数据的 state 中
+  useEffect(() => {
+    getAllSays()
+  }, [])
+
   const [draftsNum, setdraftsNum] = useState(0)
   const [articlesNum, setArticlesNum] = useState(0)
 
@@ -139,7 +153,7 @@ const Home = (props) => {
         </div>
         <div className='card data-item'>
           <div className='data-count-title'>说说数</div>
-          <div className='data-count'>35</div>
+          <div className='data-count'>{props.says.length}</div>
         </div>
         <div className='card data-item message'>
           <div className='data-count-title'>留言数</div>
@@ -164,8 +178,9 @@ const Home = (props) => {
 export default connect(
   state => ({
     articles: state.articles,
+    says: state.says
   }),
   {
-    getArticles,
+    getArticles, getSays
   }
 )(Home)

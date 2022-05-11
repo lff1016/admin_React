@@ -10,6 +10,8 @@ import store from "./redux/store";
 // 引入 antd 的样式
 import 'antd/dist/antd.css';
 import '@ant-design/pro-table/dist/table.css';
+import { ConfigProvider } from 'antd'; /* antd 国际化组件 */
+import zhCN from 'antd/lib/locale/zh_CN';
 
 // localStorage 中存储了用户信息的话，就保存到内存中
 const user = storageUtils.getUser()
@@ -18,9 +20,12 @@ console.log(memoryUtils.user);
 
 createRoot(document.getElementById('root'))
   .render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
+    <ConfigProvider locale={zhCN}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </ConfigProvider>
+
   )

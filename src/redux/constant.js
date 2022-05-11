@@ -18,3 +18,6 @@ export const GET_SAYS = 'getSays'
 
 // 获取每日一句
 export const GET_POEM = 'getPoem'
+
+// 电影
+export const GET_MOVIES = 'getMovies'

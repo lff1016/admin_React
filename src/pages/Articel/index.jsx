@@ -19,6 +19,9 @@ import { reqArticles, reqDeleteArticel } from '../../api/index';
 import { getArticles, getCategories } from '../../redux/actions';
 import isContained from '../../utils/isContained';
 import TableNav from '../../components/TableNav';
+import memoryUtils from '../../utils/memoryUtils';
+
+const { Option } = Select;
 
 const Article = ({
   articles,
@@ -27,7 +30,7 @@ const Article = ({
   getArticles,
   getCategories
 }) => {
-  const { Option } = Select;
+  const user = memoryUtils.user
   const navigate = useNavigate()
 
   // ————————渲染表格内容 start ——————
@@ -162,11 +165,12 @@ const Article = ({
 
     // 如果输入内容是空的，就展示所有文章
     if (!keyWords) {
-      setArticelShow(articles)
+      setArticelShow(articles.articlesList)
       return
     }
+    console.log(articles);
     // 过滤出要搜索的文章
-    const newArticelShow = articles.filter(item => item.title.toLowerCase().indexOf(keyWords) !== -1)
+    const newArticelShow = articles.articlesList.filter(item => item.title.toLowerCase().indexOf(keyWords) !== -1)
     console.log(newArticelShow);
 
     // 将要展示的文章放进展示列表
@@ -230,12 +234,16 @@ const Article = ({
 
   // 删除文章
   const deleteArticle = async id => {
-    const res = await reqDeleteArticel(id)
-    if(res.status === 0 ) {
-      getAllArticles()
-      message.success('删除文章成功！😀')
+    if(user.role !== 'admin') {
+      message.warning('只有管理员才可以删除文章哦~😁')
     } else {
-      message.error('删除文章失败！😔')
+      const res = await reqDeleteArticel(id)
+      if(res.status === 0 ) {
+        getAllArticles()
+        message.success('删除文章成功！😀')
+      } else {
+        message.error('删除文章失败！😔')
+      }
     }
   }
   // ————————对文章的操作 end ———————
@@ -254,7 +262,13 @@ const Article = ({
       <div className='condition-filter'>
         <div className='searchByWords'>
           标题：
-          <Input ref={searchWords} type='text' style={{ width: 350 }} placeholder='输入文章标题' onChange={searchByWord} />
+          <Input 
+            ref={searchWords} 
+            type='text'
+            style={{ width: 350 }} 
+            placeholder='输入文章标题' 
+            onChange={searchByWord} 
+          />
         </div>
         <div className='searchByTags'>
           标签：
@@ -300,7 +314,7 @@ const Article = ({
       {/* --筛选栏结束-- */}
       {/* --表格内容开始-- */}
       <div className='data-table'>
-        <TableNav  title='文章' addBtn={turnAddArticle} getSize={getSize}/>
+        <TableNav title='文章' addBtn={turnAddArticle} getSize={getSize}/>
         <Table
           rowKey={record => record._id}
           columns={columns}

@@ -11,6 +11,8 @@ import Comment from '../../pages/Comment';
 import User from '../../pages/User/index';
 import Add from '../../pages/User/Add';
 import Profile from '../../pages/Profile';
+import Movies from '../../pages/Movie';
+import MovieAdd from '../../pages/Movie/Add';
 
 import Header from './Header';
 
@@ -32,6 +34,8 @@ export default function Main() {
             <Route path='/users' element={<User/>}></Route>
             <Route path='/users/add' element={<Add/>}></Route>
             <Route path='/profile' element={<Profile/>}></Route>
+            <Route path='/movies' element={<Movies/>}></Route>
+            <Route path='/movies/add' element={<MovieAdd/>}></Route>
             <Route path='/' element={<Navigate to='/home'/>}></Route>
           </Routes>
           <Outlet/>

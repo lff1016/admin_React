@@ -5,9 +5,11 @@ import { CloseOutlined } from '@ant-design/icons';
 import './index.css';
 import { getTags } from '../../redux/actions';
 import { connect } from 'react-redux';
-import { reqTagsList, reqAddTag, reqDeleteTag, reqUpdateTag } from '../../api/index'
+import { reqTagsList, reqAddTag, reqDeleteTag, reqUpdateTag } from '../../api/index';
+import memoryUtils from '../../utils/memoryUtils';
 
 const Tags = props => {
+  const user = memoryUtils.user
 
   // 定义标签的背景色
   const tagColor = ['#f50', '#2db7f5', '#87d068', '#108ee9', '#3b5999']
@@ -24,8 +26,10 @@ const Tags = props => {
   // ————添加标签 start ————
   const [tagInput, setTagInput] = useState('')
   const addTag = async () => {
-    console.log(tagInput);
-    reqAddTag(tagInput)
+    if(user.role !== 'admin') {
+      message.warning('只有管理员才能添加标签！😁')
+    } else {
+      reqAddTag(tagInput)
       .then(res => {
         if(res.status === 0) {
           setTagInput('')
@@ -33,6 +37,7 @@ const Tags = props => {
           getAllTags()
         }
       })
+    }
   }
   // ————添加标签 end ————
 
@@ -48,8 +53,10 @@ const Tags = props => {
   }
   // ————展示修改 Modal 框 end ————
   const editTag = async () => {
-    console.log('修改标签');
-    reqUpdateTag(oldTagId, tagEditInput)
+    if(user.role !== 'admin') {
+      message.warning('只有管理员才能修改标签！😁')
+    } else {
+      reqUpdateTag(oldTagId, tagEditInput)
       .then(res => {
         if(res.status === 0) {
           setOldTagId('')
@@ -59,6 +66,7 @@ const Tags = props => {
           getAllTags()
         }
       })
+    }
   }
 
   // 取消修改
@@ -69,14 +77,17 @@ const Tags = props => {
 
   // ————删除标签 start ————
   const deleteTag = async (tagId) => {
-    console.log('删除标签', tagId);
-    reqDeleteTag(tagId)
+    if(user.role !== 'admin') {
+      message.warning('只有管理员才能删除标签！😁')
+    } else {
+      reqDeleteTag(tagId)
       .then(res => {
         if(res.status === 0) {
           message.success('删除标签成功！😀')
           getAllTags()
         }
       })
+    }
   }
   // ————删除标签 end ————
 
