@@ -40,14 +40,17 @@ export const getSentence = () => ajax('https://v1.hitokoto.cn/?c=b')
 // 获取用户的ip地址
 export const reqWeather = () => {
   return new Promise((resolve, reject) => {
-    const url = 'https://apis.map.qq.com/ws/location/v1/ip?key=TCUBZ-MLY6X-CT54A-7HUJH-OEL3O-GTFGU&output=jsonp'
+    const url = 'https://restapi.amap.com/v3/ip?output=JSON&key=c629ac8a9edae7a5ae44d2837fed4ece'
     jsonp(url, {}, async (err, data) => {
+      console.log('高德', data);
       // 如果获取成功，返回当地的邮编地址
-      if (!err && data.message === 'Success') {
-        const ip = data.result.ip
-        const weatherData = await axios.get(`https://wttr.in/${ip}?format="%l+\\+%c+\\+%t+\\+%h"`)
-        const weather = weatherData.data
-        resolve(weather)
+      if (!err && data.status == 1) {
+        const adcode = data.adcode
+        const weatherData = await axios.get(`https://restapi.amap.com/v3/weather/weatherInfo?city=${adcode}&key=c629ac8a9edae7a5ae44d2837fed4ece`)
+        if(weatherData.status === 200) {
+          const weather = weatherData.data.lives[0]
+          resolve(weather)
+        }    
       } else {
         message.error('天气获取失败')
         reject(err)

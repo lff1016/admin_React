@@ -36,7 +36,7 @@ const Home = (props) => {
   // —————每日一句 end————
 
   // ————时钟card start————
-  const [weather, setWeather] = useState([])
+  const [weather, setWeather] = useState({})
   const [curTime, setCurTime] = useState(format(Date.now()))
   // 组件挂载时获取时间，return 后进行组件卸载之前的操作
   useEffect(() => {
@@ -49,16 +49,17 @@ const Home = (props) => {
   }, [])
 
   //处理天气的格式
-  function formatWeather(weatherData) {
-    const res_text = weatherData.replace(/not found/g, 'not found,not found').replace(/"/g, '').replace(/\+/g, '').replace(/,/g, '\\').replace(/ /g, '').replace(/°C/g, '');
-    const res_list = res_text.split('\\');
-    return res_list
-  }
+  // function formatWeather(weatherData) {
+  //   const res_text = weatherData.replace(/not found/g, 'not found,not found').replace(/"/g, '').replace(/\+/g, '').replace(/,/g, '\\').replace(/ /g, '').replace(/°C/g, '');
+  //   const res_list = res_text.split('\\');
+  //   return res_list
+  // }
   // 组件挂载时请求地址，获取天气信息
   useEffect(() => {
     const weatherReq = async () => {
       const weather = await reqWeather()
-      setWeather(formatWeather(weather))
+      console.log('home',weather );
+      setWeather(weather)
     }
     weatherReq()
   }, [])
@@ -119,14 +120,14 @@ const Home = (props) => {
           <div className='card-content time-weather'>
             <div className='clock-row'>
               <span className='clock-date'>{curTime[0]}</span>
-              <span className='clock-weather'>{weather[2]}{weather[3]}℃</span>
-              <span className='clock-humidity'>💧{weather[4]}</span>
+              <span className='clock-weather'>{weather.weather} {weather.temperature}℃</span>
+              <span className='clock-humidity'>💧 {weather.humidity}</span>
             </div>
             <div className='clock-row'>
               <span className='clock-curTime'>{curTime[1]}</span>
             </div>
             <div className='clock-row'>
-              <span className='clock-location'>{weather[0]}</span>
+              <span className='clock-location'>{weather.province}</span>
               <span className='clock-am_pm'>{curTime[2]}</span>
             </div>
           </div>
