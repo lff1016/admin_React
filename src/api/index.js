@@ -42,7 +42,6 @@ export const reqWeather = () => {
   return new Promise((resolve, reject) => {
     const url = 'https://restapi.amap.com/v3/ip?output=JSON&key=c629ac8a9edae7a5ae44d2837fed4ece'
     jsonp(url, {}, async (err, data) => {
-      console.log('高德', data);
       // 如果获取成功，返回当地的邮编地址
       if (!err && data.status == 1) {
         const adcode = data.adcode

@@ -10,6 +10,7 @@ import { getArticles, getSays } from '../../redux/actions';
 
 import Category from '../../components/Category';
 import Tags from '../../components/Tags';
+import CategoryChart from '../../components/Echarts/CategoryChart';
 
 const Home = (props) => {
 
@@ -58,7 +59,6 @@ const Home = (props) => {
   useEffect(() => {
     const weatherReq = async () => {
       const weather = await reqWeather()
-      console.log('home',weather );
       setWeather(weather)
     }
     weatherReq()
@@ -127,7 +127,7 @@ const Home = (props) => {
               <span className='clock-curTime'>{curTime[1]}</span>
             </div>
             <div className='clock-row'>
-              <span className='clock-location'>{weather.province}</span>
+              <span className='clock-location'>{weather.province}{weather.city}</span>
               <span className='clock-am_pm'>{curTime[2]}</span>
             </div>
           </div>
@@ -168,9 +168,7 @@ const Home = (props) => {
       <div className='function'>
         <Category />
         <Tags />
-        <div className='card'>
-          3
-        </div>
+        <CategoryChart/>
       </div>
     </div>
   )

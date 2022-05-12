@@ -109,23 +109,23 @@ export default function Profile() {
   // ————处理上传图片 end ————
 
   // ————处理图片预览 start ————
-  const [previewVisible, setPreviewVisible] = useState(false) /* 是否预览 */
-  const [previewImage, setPreviewImage] = useState('') /* 预览图片地址 */
-  const [previewTitle, setPreviewTitle] = useState('') /* 预览图片标题 */
+  //const [previewVisible, setPreviewVisible] = useState(false) /* 是否预览 */
+  //const [previewImage, setPreviewImage] = useState('') /* 预览图片地址 */
+  //const [previewTitle, setPreviewTitle] = useState('') /* 预览图片标题 */
 
-  const handlePreview = async file => {
+/*   const handlePreview = async file => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj)
     }
     setPreviewImage(file.url || file.preview)
     setPreviewVisible(true)
     setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/')))
-  }
+  } */
 
   // 关闭预览
-  const closeModal = () => {
+ /*  const closeModal = () => {
     setPreviewVisible(false)
-  }
+  } */
 
   // ————提交用户修改信息————
   const handleSubmit = async () => {
@@ -155,6 +155,8 @@ export default function Profile() {
     }
   }
 
+  console.log(fileList);
+
   return (
     <div className='profile'>
       <Form
@@ -175,23 +177,25 @@ export default function Profile() {
             accept='image/*' /* 只接收图片格式 */
             name='avatar' /* 请求参数名 */
             listType="picture-card" /* 卡片样式 */
-            fileList={fileList}
-            onPreview={handlePreview} /* 预览 */
+            // fileList={fileList}
+            showUploadList={false}
+            // onPreview={handlePreview} /* 预览 */
             onChange={postImg}
             maxCount={1}
             ref={img}
           >
             {/* {fileList.length >= 1 ? null : uploadButton} */}
-          {fileList.url ? <img src={fileList.url}/> : uploadButton}
+        
+          {fileList.length !== 0 ? <img src={fileList[0].url}/> : uploadButton}
           </Upload>
-          <Modal
+{/*           <Modal
             visible={previewVisible}
             title={previewTitle}
             footer={null}
             onCancel={closeModal}
           >
             <img alt="example" style={{ width: '100%' }} src={previewImage} />
-          </Modal>
+          </Modal> */}
         </Form.Item>
         {/* 用户名称 */}
         <Form.Item
