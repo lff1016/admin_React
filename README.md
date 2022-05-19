@@ -29,5 +29,19 @@
   - 后端node github 地址(dev分支)：https://github.com/lff1016/react-admin-server.git
     - 运行： `node server.js`/ `nodemon server.js`
 
+  3. 项目图片
+   - 首页
+   image.png
+   - 文章列表页
+   image.png
+   - 文章编辑页
+   image.png
+   - 说说
+   image.png
+   - 用户列表
+   image.png
+   - 个人信息
+   image.png
+
 ## 欢迎联系
 1. QQ : 1037395462
