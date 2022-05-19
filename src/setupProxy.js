@@ -7,5 +7,4 @@ module.exports = function (app) {
         changeOrigin: true,
         pathRewrite: {'^/api': ''}
     }))
-
 }
