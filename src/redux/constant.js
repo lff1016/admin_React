@@ -21,3 +21,6 @@ export const GET_POEM = 'getPoem'
 
 // 电影
 export const GET_MOVIES = 'getMovies'
+
+// 获取评论
+export const GET_COMMENTS = 'getComments'

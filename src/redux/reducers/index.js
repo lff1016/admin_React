@@ -7,7 +7,8 @@ import categories from './category';
 import tags from './tags';
 import poems from './poem';
 import says from './says';
-import movies from './movies'
+import movies from './movies';
+import comments from './comments'
 
 
 export default combineReducers({
@@ -18,5 +19,6 @@ export default combineReducers({
   tags,
   poems,
   says,
-  movies
+  movies,
+  comments
 })

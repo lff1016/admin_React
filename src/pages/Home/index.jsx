@@ -79,7 +79,6 @@ const Home = (props) => {
   // 向数据库中获取所有的说说,放入redux中
   const getAllSays = async () => {
     const res = await reqSaysList()
-    console.log(res);
     if (res.status === 0) {
       props.getSays(res.data)
     }

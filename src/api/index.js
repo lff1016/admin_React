@@ -5,7 +5,7 @@ import { message } from 'antd';
 import axios from 'axios';
 
 // 登录
-export const reqLogin = (email, password) => ajax('/api/login', { email, password }, 'POST')
+export const reqLogin = (email, password) => ajax('/api/admin/login', { email, password }, 'POST')
 
 // 查询某个用户
 export const reqGetUser = id => ajax(`/api/admin/user?id=${id}`)
@@ -99,3 +99,12 @@ export const reqAddAndUpdateSays = say => ajax('/api/admin/says/'+ (say._id ? 'u
 
 // 删除说说
 export const reqDeleteSay = id => ajax('/api/admin/says/delete', {_id: id}, 'POST')
+
+// 获取评论
+export const reqCommentsList = () => ajax('/api/admin/comment/list')
+
+// 审核评论
+export const reqCommentVerify = (_id, isShow) => ajax('/api/admin/comment/verify', {_id, isShow}, 'POST')
+
+// 删除评论
+export const reqCommentDelete = _id => ajax('/api/admin/comment/delete', {_id}, 'POST')

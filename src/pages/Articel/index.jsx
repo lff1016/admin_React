@@ -168,7 +168,6 @@ const Article = ({
       setArticelShow(articles.articlesList)
       return
     }
-    console.log(articles);
     // 过滤出要搜索的文章
     const newArticelShow = articles.articlesList.filter(item => item.title.toLowerCase().indexOf(keyWords) !== -1)
     console.log(newArticelShow);

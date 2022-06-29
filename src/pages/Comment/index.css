@@ -1,0 +1,28 @@
+.comment {
+  display: flex;
+  flex-direction: column;
+}
+.comment .data-table {
+  position: relative;
+  height: 500px;
+  padding: 10px;
+  background-color: #fff;
+}
+.comment .data-table .status-dot {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.comment .data-table .status-dot i {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 5px;
+  border-radius: 6px;
+}
+.comment .data-table .status-dot .status-dot-fail {
+  background-color: red;
+}
+.comment .data-table .status-dot .status-dot-success {
+  background-color: #52c41a;
+}
