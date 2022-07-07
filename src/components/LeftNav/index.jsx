@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 import memoryUtils from '../../utils/memoryUtils';
 import menuList from '../../config/menuConfig';
+import { baseUrl } from '../../utils/contant'
 import './index.css'
 
 export default function LeftNav() {
@@ -42,7 +43,7 @@ export default function LeftNav() {
     <Sider>
       <div className="logo" />
       <div className='logo-title'>
-        <Avatar className='logo-avatar' size={64} src={`http://localhost:3001/upload/avatar/${user.avatar[0]}`} style={{ backgroundColor: '#fff' }} />
+        <Avatar className='logo-avatar' size={64} src={`${baseUrl}/upload/avatar/${user.avatar[0]}`} style={{ backgroundColor: '#fff' }} />
         <h3 className='leftNav-info'>后台管理系统</h3>
       </div>
       <Menu theme="dark" mode="inline" selectedKeys={[curPath]} defaultOpenKeys={[openKey]}>

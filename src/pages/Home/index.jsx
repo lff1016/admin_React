@@ -11,6 +11,7 @@ import { getArticles, getSays } from '../../redux/actions';
 import Category from '../../components/Category';
 import Tags from '../../components/Tags';
 import CategoryChart from '../../components/Echarts/CategoryChart';
+import DataCount from '../../components/DataCount';
 
 const Home = (props) => {
 
@@ -102,6 +103,26 @@ const Home = (props) => {
     
   }, [props])
 
+    // 第二行的数据
+    const dataCountList = [
+      {
+        name: "文章数",
+        count: articlesNum
+      },
+      {
+        name: "草稿数",
+        count: draftsNum
+      },
+      {
+        name: "说说数",
+        count: props.says.length       
+      },
+      {
+        name: "留言数",
+        count: 65
+      }
+    ]
+
   return (
     <div className='home'>
       {/* 第一行的内容 */}
@@ -143,23 +164,9 @@ const Home = (props) => {
 
       {/* 第二行的内容 */}
       <div className='article-data'>
-        <div className='card data-item'>
-          <div className='data-count-title'>文章数</div>
-          <div className='data-count'>{articlesNum}</div>
-        </div>
-        <div className='card data-item'>
-          <div className='data-count-title'>草稿数</div>
-          <div className='data-count'>{draftsNum}</div>
-        </div>
-        <div className='card data-item'>
-          <div className='data-count-title'>说说数</div>
-          <div className='data-count'>{props.says.length}</div>
-        </div>
-        <div className='card data-item message'>
-          <div className='data-count-title'>留言数</div>
-          <div className='data-count'>65</div>
-        </div>
-
+        {
+          dataCountList.map(item => <DataCount key={item.name} name={item.name} count={item.count}/>)
+        }
       </div>
 
 

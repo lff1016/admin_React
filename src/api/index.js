@@ -108,3 +108,12 @@ export const reqCommentVerify = (_id, isShow) => ajax('/api/admin/comment/verify
 
 // 删除评论
 export const reqCommentDelete = _id => ajax('/api/admin/comment/delete', {_id}, 'POST')
+
+// 获取电影地区
+export const reqCountry = () => ajax('/api1/movie/country/list')
+
+// 获取电影列表
+export const reqMovieList = () => ajax('/api1/movie/list')
+
+// 添加电影
+export const reqAddMovie = movieObj => ajax('/api1/movie/save', movieObj, 'POST')

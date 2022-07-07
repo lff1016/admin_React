@@ -9,8 +9,6 @@ import {
   UserOutlined,
   UserAddOutlined,
   ContactsOutlined,
-  InstagramOutlined,
-  VideoCameraAddOutlined,
   VideoCameraOutlined
 } from '@ant-design/icons'
 
@@ -72,23 +70,10 @@ const menuList = [
     ]
   },
   {
-    key: 'sub3',
-    title: '我的观影',
-    icon: <InstagramOutlined />,
-    children: [
-      {
-        key: '/movies',
-        title: '电影列表',
-        path: '/movies',
-        icon: <VideoCameraOutlined />,
-      },
-      {
-        key: '/movies/add',
-        title: '添加电影',
-        path: '/movies/add',
-        icon: <VideoCameraAddOutlined />,
-      }
-    ]
+    key: '/movies',
+    title: '电影列表',
+    path: '/movies',
+    icon: <VideoCameraOutlined />,
   },
   {
     key: '/profile',

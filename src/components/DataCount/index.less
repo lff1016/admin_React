@@ -1,0 +1,19 @@
+@dataCount: 4;
+
+.data-item {
+  position: relative;
+  width: calc( ( 100% / @dataCount ) - 5px );
+  .data-count {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 60px;
+    color: var(--bg-color)
+  }
+  &:hover {
+    .data-count{
+        color: red;
+      }
+  }
+}

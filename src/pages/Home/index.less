@@ -18,7 +18,7 @@
 }
 
 .basic-info {
-  height: 160px;
+  height: 200px;
 
   // 第一行的用户信息 card
   .author-info {
@@ -64,30 +64,13 @@
 
 // 第二行的样式
 .article-data {
-  height: 140px;
+  height: 200px;
   width: 100%;
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
   font-size: 20px;
-  .data-item {
-    position: relative;
-    width: 100%;
-    margin-right: 20px;
-    .data-count {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 60px;
-      color: var(--bg-color)
-    }
-    &:hover {
-      .data-count{
-          color: red;
-        }
-    }
-  }
+
   .message {
     margin-right: 0
   }
@@ -96,10 +79,10 @@
 
 // 第三行的样式
 .function {
-  min-height: 350px;
+  min-height: 400px;
   margin-top: 20px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   font-size: 18px;
   
 }

@@ -108,7 +108,7 @@ export default function User() {
             cancelText="取消"
           >
             <Button type="primary" danger>删除</Button>
-          </Popconfirm>,
+          </Popconfirm>
         </Space>
       ),
     },

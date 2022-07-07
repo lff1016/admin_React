@@ -61,43 +61,53 @@
   width: 100%;
   height: auto;
 }
-.movies .movies-list .list-content .card-item .movie-info {
+.movies .movies-list .list-content .card-item .movie-item-right {
+  display: flex;
   flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0 5px;
 }
-.movies .movies-list .list-content .card-item .movie-info .movie-name {
+.movies .movies-list .list-content .card-item .movie-item-right .movie-info {
+  margin-bottom: 20px;
+}
+.movies .movies-list .list-content .card-item .movie-item-right .movie-info .movie-name {
   display: flex;
   justify-content: space-between;
   font-size: 18px;
   font-weight: 700;
   margin: 3px 0;
 }
-.movies .movies-list .list-content .card-item .movie-info .movie-name .movie-score {
+.movies .movies-list .list-content .card-item .movie-item-right .movie-info .movie-name .movie-score {
   color: #ff6000;
 }
-.movies .movies-list .list-content .card-item .movie-info .movie-year {
+.movies .movies-list .list-content .card-item .movie-item-right .movie-info .movie-year {
   display: flex;
   flex-direction: column;
 }
-.movies .movies-list .list-content .card-item .movie-info .movie-year .movie-publishDate {
+.movies .movies-list .list-content .card-item .movie-item-right .movie-info .movie-year .movie-publishDate {
   margin-bottom: 5px;
 }
-.movies .movies-list .list-content .card-item .movie-info .movie-comment {
+.movies .movies-list .list-content .card-item .movie-item-right .movie-info .movie-comment {
   width: 100%;
 }
-.movies .movies-list .list-content .card-item .movie-info .movie-action {
+.movies .movies-list .list-content .card-item .movie-item-right .movie-action {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
 }
-.movies .movies-list .list-content .card-item .movie-info .movie-action .play-btn {
+.movies .movies-list .list-content .card-item .movie-item-right .movie-action .movie-play {
+  background-color: #1890ff;
+  color: #fff;
+  padding: 5px;
+  border-radius: 10px;
+}
+.movies .movies-list .list-content .card-item .movie-item-right .movie-action .movie-like {
   margin-right: 20px;
 }
-.movies .movies-list .list-content .card-item .movie-info .movie-action .movie-like {
-  margin-right: 20px;
-}
-.movies .movies-list .list-content .card-item .movie-info .movie-action .movie-like:hover {
+.movies .movies-list .list-content .card-item .movie-item-right .movie-action .movie-like:hover {
   cursor: pointer;
 }
-.movies .movies-list .list-content .card-item .movie-info .movie-action .setting:hover {
+.movies .movies-list .list-content .card-item .movie-item-right .movie-action .setting:hover {
   cursor: pointer;
 }

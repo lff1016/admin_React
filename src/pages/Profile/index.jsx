@@ -13,6 +13,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import memoryUtils from '../../utils/memoryUtils';
 import storageUtils from '../../utils/storageUtils';
 import { reqDeleteAvatar, reqUserUpdate, reqGetUser } from '../../api/index'
+import { baseUrl } from '../../utils/contant'
 
 export default function Profile() {
 
@@ -40,7 +41,7 @@ export default function Profile() {
           useId: -index,
           name: img,
           status: 'done',
-          url: 'http://localhost:3001/upload/avatar/' + img
+          url: `${baseUrl}/upload/avatar/` + img
         }
       ))
       setFileList(newFileList)
