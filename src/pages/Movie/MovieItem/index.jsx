@@ -1,27 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   Typography,
-  Popover,
+  Button
 } from 'antd';
-import { HeartTwoTone, SettingTwoTone } from '@ant-design/icons';
+import { useBoolean } from 'ahooks';
+import { CaretRightOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
+import { getMovies } from '../../../redux/actions';
 import errImg from '../../../assets/img/img_err.jpg';
+import { connect } from 'react-redux';
 
-export default function MoviemovieItemInfo({ movieItemInfo, editMovie}) {
+import './index.css';
+
+export default function MoviemovieItemInfo({ movieItemInfo, getMovieNoAndAction}) {
 
   /* antd 设置 */
   const { Paragraph, Text } = Typography;
   const [ellipsis, setEllipsis] = React.useState(true);
-
-  // 设置按钮的 html 内容
-  const content = (
-    <div style={{ width: '30px' }}>
-      <a onClick={() => editMovie(movieItemInfo.movieNo)}>编辑</a>
-      <a>删除</a>
-    </div>
-  )
-
 
   return (
     <div className='card-movieItemInfo' key={movieItemInfo.movieNo}>
@@ -67,12 +63,29 @@ export default function MoviemovieItemInfo({ movieItemInfo, editMovie}) {
 
         </div>
         <div className='movie-action'>
-          <a href={movieItemInfo.movieLink} className='movie-play' target='_blank'>立即观看</a>
+          <Button type="primary" ghost href={movieItemInfo.movieLink} size="small"  shape="round" icon={<CaretRightOutlined style={{fontSize: '18px'}} />} />
+          {/* <a href={movieItemInfo.movieLink} className='movie-play' target='_blank'>立即观看</a> */}
           <div className='movie-action-setting'>
-            <HeartTwoTone className='movie-like' style={{ fontSize: '20px' }} />
-            <Popover content={content} trigger="click" overlayStyle={{ width: '80px' }} placement='topRight' arrowPointAtCenter>
-              <SettingTwoTone className='setting' style={{ fontSize: '20px' }} />
-            </Popover>
+            {/* 编辑 */}
+            <Button 
+              type="primary" 
+              shape="round" 
+              size="small" 
+              icon={<EditOutlined />} 
+              onClick={() => getMovieNoAndAction(movieItemInfo.movieNo, 'edit')}
+              >
+              </Button>
+            {/* 删除 */}
+            <Button 
+              type="primary" 
+              danger 
+              shape="round" 
+              size="small" 
+              icon={<DeleteOutlined />}
+              onClick={() => getMovieNoAndAction(movieItemInfo.movieNo, 'delete')}
+              >
+              
+              </Button>
           </div>
 
         </div>

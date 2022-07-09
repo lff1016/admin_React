@@ -1,0 +1,82 @@
+.card-movieItemInfo:not(:nth-child(3n)) {
+  margin-right: 35px;
+}
+.card-movieItemInfo {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  padding: 5px;
+  width: 400px;
+  height: 265px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+  background-color: #FFFFFF;
+  box-shadow: 0;
+  transition: box-shadow 0.3s;
+  margin-bottom: 10px;
+}
+.card-movieItemInfo:hover {
+  box-shadow: 0 1px 2px -2px #00000029, 0 3px 6px #0000001f, 0 5px 12px 4px #00000017;
+}
+.card-movieItemInfo .info {
+  margin: 5px 0;
+}
+.card-movieItemInfo .movie-cover {
+  width: 183px;
+  margin-right: 10px;
+}
+.card-movieItemInfo .movie-cover .movie-img {
+  width: 100%;
+  height: auto;
+}
+.card-movieItemInfo .movie-movieItemInfo-right {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0 5px;
+}
+.card-movieItemInfo .movie-movieItemInfo-right .movie-info {
+  margin-bottom: 20px;
+}
+.card-movieItemInfo .movie-movieItemInfo-right .movie-info .movie-name {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 3px 0;
+}
+.card-movieItemInfo .movie-movieItemInfo-right .movie-info .movie-name .movie-score {
+  color: #ff6000;
+}
+.card-movieItemInfo .movie-movieItemInfo-right .movie-info .movie-year {
+  display: flex;
+  flex-direction: column;
+}
+.card-movieItemInfo .movie-movieItemInfo-right .movie-info .movie-year .movie-publishDate {
+  margin-bottom: 5px;
+}
+.card-movieItemInfo .movie-movieItemInfo-right .movie-info .movie-comment {
+  width: 100%;
+}
+.card-movieItemInfo .movie-movieItemInfo-right .movie-action {
+  width: 100%;
+  position: absolute;
+  bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 10px;
+}
+.card-movieItemInfo .movie-movieItemInfo-right .movie-action .movie-play {
+  background-color: #1890ff;
+  color: #fff;
+  padding: 5px;
+  border-radius: 10px;
+}
+.card-movieItemInfo .movie-movieItemInfo-right .movie-action .movie-action-setting {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+}

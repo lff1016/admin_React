@@ -117,3 +117,9 @@ export const reqMovieList = () => ajax('/api1/movie/list')
 
 // 添加电影
 export const reqAddMovie = movieObj => ajax('/api1/movie/save', movieObj, 'POST')
+
+// 更新电影
+export const reqUpdateOrAddMovie = (movieObj, isEdit) => ajax(`/api1/movie/${isEdit ? 'update' : 'save'}`, movieObj, 'POST')
+
+// 删除电影
+export const reqDeleteMovie = movieNo => ajax('/api1/movie/delete', {movieNo: movieNo}, 'POST')
